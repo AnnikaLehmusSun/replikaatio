@@ -1,0 +1,438 @@
+---
+title: "muuttujamuutokset"
+output: html_document
+---
+
+# Aineiston lataus kahdesta erillisestä tiedostosta, ja tiedostojen yhdistäminen yhdeksi aineistoksi "BHPS2000"
+```{r}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(haven, ggplot2,knitr, pander,descr,foreign,dplyr,Hmisc,psych,GPArotation,plyr, dplyr, rmarkdown)
+library(tidyverse)
+jindresp <- read_sav("/Applications/replikaatio/data/jindresp.sav")
+jhhresp <- read_sav("/Applications/replikaatio/data/jhhresp.sav")
+
+BHPS2000 <- merge(jindresp, jhhresp, by="JHID")
+```
+
+# Vain niiden muuttujien valitseminen aineistosta BHPS2000, joita Anand et al. käyttivät analyysissaan, ja BHPS_data - aineiston luominen. 
+```{r}
+keep_columns <- c("JHLLT","JHSCANE","JHSCNTE","JLKMOVE", "JCARUSE", "JHSPRBQ","JQFEDHI","JGHQA","JGHQB", "JGHQE", "JGHQI", "JGHQJ", "JGHQD","JGHQF", "JGHQH", "JHSCANB", "JHSCNTB", "JHSCAND", "JHSCNTD","JHSCANF","JHSCNTF","JGHQK", "JGHQC", "JGHQL", "JGHQG", "JVOTE7", "JHLENDW", "JHLLTWA", "JLFSATO", "JLFSAT1", "JLFSAT2", "JLFSAT3", "JLFSAT4", "JLFSAT5", "JLFSAT6", "JLFSAT7", "JLFSAT8")
+
+BHPS_data <- dplyr::select(BHPS2000, one_of(keep_columns))
+dim(BHPS_data)
+describe(BHPS_data)
+```
+
+#Muuttujien uudelleen nimeäminen ja koodaaminen Anand et. al.:in analyysin mukaisesti
+
+#TERVEYS: Being able to have good health – variable S_HL_LIMIT BHPS variable (JHLLT) and question –‘‘Does your health in any way limit your daily activities compared to most people of your age?’’ Yes coded as one. No coded as 0.
+```{r}
+BHPS_data$S_HL_Limit <- BHPS_data$JHLLT
+BHPS_data$S_HL_Limit[BHPS_data$S_HL_Limit< 0]<-NA
+BHPS_data$S_HL_Limit[BHPS_data$S_HL_Limit == 1] <- 1
+BHPS_data$S_HL_Limit[BHPS_data$S_HL_Limit == 2] <- 0
+```
+ 
+#RAVINTO: Being able to be adequately nourished – variable S_HL_NOURIS HBHPS variable (JHSCANE) and question –‘‘Here is a list of things which people might have or do. Please look at this card and tell me which things you (and your household) have or do? Eat meat, chicken, fish every second day.’’Yes coded as one. 
+```{r}
+BHPS_data$S_HL_NOURISH <- BHPS_data$JHSCANE
+BHPS_data$S_HL_NOURISH[BHPS_data$S_HL_NOURISH< 1]<-
+BHPS_data$S_HL_NOURISH[BHPS_data$S_HL_NOURISH == 1] <- 
+```
+
+# ???? Those who answer no are asked (BHPS Variable JHSCNTE) –
+‘‘Would you like to be able to eat meat, chicken, fish at least every second day, but must do without because you cannot afford it?’’No coded as one. Yes coded as 0.
+```{r}
+
+```
+
+
+#MAHDOLLISUUS MUUTTAA. Being able to have . . . adequate shelter –variable S_H_LAC_MOVE BHPS variable (JLKMOVE) and question ‘‘If you could choose, would you stay here in your present home or would you prefer to move somewhere else?’’ ‘Stay here’ coded as 0. 
+```{r}
+BHPS_data$S_H_LAC_MOVE <- BHPS_data$JHSCNTE
+BHPS_data$S_H_LAC_MOVE[BHPS_data$S_H_LAC_MOVE< 0.1]<-
+BHPS_data$S_H_LAC_MOVE[BHPS_data$S_H_LAC_MOVE == 0] <- 
+BHPS_data$S_H_LAC_MOVE[BHPS_data$S_H_LAC_MOVE > 0.1] <-
+```
+
+# ???? For those answering ‘Prefer to move’ those answering to question (BHPS Variable XPMOVE) ‘‘(Even though you may not want to move) Do you expect you will move in the coming year?’’Yes are coded 0. No are coded one.
+```{r}
+
+```
+
+#FYYSINEN EHEYS: MAHDOLLISUUS LIIKKUA.Bodily Integrity. Being able to move freely from place to place – variable S_S_CAR BHPS variable (JCARUSE ) and question ‘‘Do you normally have access to a car or van that you can use whenever you want to?’’ Yes coded as one. No and ‘Don’t drive’ coded as 0.
+```{r}
+BHPS_data$S_S_CAR <- BHPS_data$JCARUSE
+BHPS_data$S_S_CAR[BHPS_data$S_S_CAR< 0]<-
+BHPS_data$S_S_CAR[BHPS_data$S_S_CAR == 1] <- 
+BHPS_data$S_S_CAR[BHPS_data$S_S_CAR == 2] <- 
+```
+
+#TURVALLISUUS. Being secure against violent assault – variable S_H_CRIME BHPS variable (JHSPRBQ) and question ‘‘Does your accommodation have any of the following problems? Vandalism or crime in the area’’ Yes coded as 0. No coded as 1.
+```{r}
+BHPS_data$S_H_CRIME <- BHPS_data$JHSPRBQ
+BHPS_data$S_H_CRIME[BHPS_data$S_H_CRIME< 0]<-
+BHPS_data$S_H_CRIME[BHPS_data$S_H_CRIME == 1] <- 
+BHPS_data$S_H_CRIME[BHPS_data$S_H_CRIME == 2] <- 
+```
+
+# AJATTELU, MIELIKUVITUS, AISTIT. Senses, Imagination, and Thought. Being able to use the senses, to imagine, think, and reason – and to do these things in a ‘truly human’ way, a way informed and cultivated by an adequate education, including, but by no means limited to, literacy and basic mathematical and scientific training. Being able to use imagination and thought in connection with expe- riencing and producing works and events of one’s own choice, religious, literary, musical, and so forth. Being able to use one’s mind in ways protected by guarantees of freedom of expression with respect to both political and artistic speech, and freedom of religious exercise. Being able to have pleasurable experiences and to avoid non-beneficial pain. Being able to . . . imagine, think and reason, . . . cultivated by an adequate education – variable S_S_EDUCATE BHPS variable (JQFEDHI) is a derived variable giving the highest educational qualification. Those coded ‘A’ level and above are coded as one. The remainder are coded as 0.
+```{r}
+BHPS_data$S_S_EDUCATE <- BHPS_data$JQFEDHI
+BHPS_data$S_S_EDUCATE[BHPS_data$S_S_EDUCATE< 0]<- 
+BHPS_data$S_S_EDUCATE[BHPS_data$S_S_EDUCATE == 1] <- 
+BHPS_data$S_S_EDUCATE[BHPS_data$S_S_EDUCATE == 2] <-
+```
+
+
+ TUNTEET. Emotions.  Not having one’s emotional development blighted by fear and anxiety – variables S_W_CONCB S_W_CONCL, S_W_CON- CML, S_W_SLEEPN, S_W_SLEEPM, S_W_SLEEPMM, S_W_STRAINN, S_W_STRAINM, S_W_STRAINMM, S_W_DEPRESSN, S_W_DEPRESSM, S_W_DEPRESSMM, S_W_CONFIDENTN, S_W_CONFIDENTM, S_W_CON- FIDENTMM, 
+ 
+ BHPS variable (JGHQA) and question‘‘Have you recently. . . been able to concentrate on whatever you’re doing?’’S_W_CONCB has value one for those answering ‘Better than usual’, S_W_CONCL for those answering ‘Less than usual’ and S_W_CONCML for those answering ‘Much less than usual’. The base is those answering ‘Same as usual’.
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+
+
+BHPS variable (JGHQB) and question
+‘‘Have you recently. . .. lost much sleep over worry?’’ S_W_SLEEPN has value one for those answering ‘Not at
+all’, S_W_SLEEPM for those answering ‘Rather more than usual’, and S_W_SLEEPMM for those answering ‘Much more than usual’. The base is those answering ‘No more than usual’.
+
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+
+BHPS variable (JGHQE) and question
+‘‘Have you recently. . .. felt constantly under strain?’’ S_W_STRAINN has value one for those answering ‘Not at
+all’, S_W_STRAINM for those answering ‘Rather more than usual’, and S_W_STRAINMM for those answering ‘Much More than usual’. The base is those answering ‘No more than usual’.
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+
+BHPS variable (JGHQI) and question
+‘‘Have you recently. . . been feeling unhappy or depressed?’’ S_W_DEPRESSN has value one for those answering ‘Not at all’, S_W_DEPRESSM for those answering ‘Rather more than usual’, and S_W_DEPRESSMM for those answering ‘Much more than usual’. The base is those answering ‘No more than usual’
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+
+BHPS variable (JGHQJ) and question
+‘‘Have you recently. . .been losing confidence in yourself?’’ S_W_CONFIDENTN has value one for those answering
+‘Not at all’, S_W_CONFIDENTM for those answering ‘Rather more than usual’, and S_W_CONFIDENTMM for those answering ‘Much more than usual’. The base is those answering ‘No more than usual’
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+
+6.Practical Reason. Being able to form a conception of the good and to engage in critical reflection about the planning of one’s life. (This entails protection for the liberty of conscience and religious observance.)
+Being able to ... engage in critical reflection about the planning of one’s life – variables
+S_W_DECIDEM, S_W_DECIDEL, S_W_DECIDEML, S_W_DIFICULTN, S_W_DIFICULTM, S_W_DIFICUL TMM, S_W_FACEUPM, S_W_FACEUPL, S_W_FACE UPML
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+
+BHPS variable (JGHQD) and question
+‘‘Have you recently. . . felt capable of making decisions about things?’’
+S_W_DECIDEM has a value one for those answering ‘More so than usual’, S_W_DECIDEL for those answering ‘Less so than usual’ and S_W_DECIDEML for those answering ‘Much less capable than usual’. The base is those answering ‘Same as usual’
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+
+BHPS variable (JGHQF) and question
+‘‘Have you recently... felt you couldn’t overcome your difficulties?’’
+S_W_DIFICULTN has a value one for those answering ‘Not at all’, S_W_DIFICULTM for those answering ‘Rather more than usual’ and S_W_DIFICULTMM for those answering ‘Much more than usual’. The base is those answering ‘No more than usual’
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+
+BHPS variable (JGHQH) and question
+‘‘Have you recently. . . been able to face up to problems?’’ S_W_FACEUPM has a value one for those answering
+‘More so than usual’, S_W_FACEUPL for those answering ‘Less so than usual’ and S_W_FACEUPMML for those answering ‘Much less than usual’. The base is those answering ‘Same as usual’
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+
+7. Affiliation
+
+A. Being able to live with and toward others, to recognize and’ show concern for other human beings, to engage in vari- ous forms of social interaction; to be able to imagine the situ- ation of another (Protecting this capability means protecting institutions that constitute and nourish such forms of affilia- tion, and also protecting the freedom of assembly and political speech.)
+
+B. Having the social bases of self-respect and non-humilia- tion; being able to be treated as a dignified being whose worth is equal to that of others. This entails provisions of non-dis- crimination on the basis of race, sex, sexual orientation, ethnicity, caste, religion, and national origin.
+Being able to . . . engage in various forms of social interaction- variables S_S_HOLIDAY, S_S_CLOTHES and S_S_MEAL
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+
+BHPS variable (JHSCANB) and question –
+‘‘Here is a list of things which people might have or do. Please look at this card and tell me which things you (and your household) have or do? Pay for a week’s annual holiday away from home.’’
+S_S_HOLIDAY is coded as one for those answering yes. Those who answer no are asked (BHPS Variable JHSCNTB) – ‘‘Would you like to be able to pay for a week’s annual holiday away from home, but must do without because you
+cannot afford it?’’
+S_S_HOLIDAY is coded as one for those answering No and
+0 for those answering Yes.
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+
+
+BHPS variable (JHSCAND) and question –
+‘‘Here is a list of things which people might have or do.
+Please look at this card and tell me which things you (and your household) have or do? Buy new, rather than second hand, clothes.’’
+S_S_CLOTHES is coded as one for those answering yes. Those who answer no are asked (BHPS Variable JHSCNTD) – ‘‘Would you like to be able to buy new, rather than second hand, clothes, but must do without because you cannot afford
+it?’’
+S_S_CLOTHES is coded as one for those answering ‘No’
+and 0 for those answering ‘Yes’.
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+
+BHPS variable (JHSCANF) and question –
+‘‘Here is a list of things which people might have or do.
+Please look at this card and tell me which things you (and your household) have or do? Have friends or family for a drink or meal at least once a month’’.
+S_S_MEAL is coded as one for those answering yes. Those who answer no are asked (BHPS Variable JHSCNTF) –
+‘‘Would you like to be able to have friends or family for a drink or meal at least once a month, but must do without because you cannot afford it?’’
+S_S_MEAL is coded as one for those answering ‘No’ and 0 for those answering ‘Yes’.
+Being able to be treated as a dignified person whose worth is equal to others – variables
+S_W_WORTHN, S_W_WORTHM, S_W_WORTH MM, S_W_ROLEM, S_W_ROLEL, S_W_ROLEML.
+50 P. ANAND ET AL.
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+
+BHPS variable (JGHQK) and question
+‘‘Have you recently. . . been thinking of yourself as a worthless person?
+S_W_WORTHN has a value one for those answering ‘Not at all’, S_W_WORTHM for those answering ‘Rather more than usual’, S_W_WORTHMM for those answering ‘Much more than usual’. The base is those answering ‘No more than usual’
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+
+BHPS variable (JGHQC) and question –
+‘‘Have you recently... felt that you were playing a useful part in things?’’
+S_W_ROLEM has a value one for those answering ‘More than usual’, S_W_ROLEL for those answering ‘Less so than usual’ and S_W_ROLEML for those answering ‘Much less than usual’. The base is those answering ‘Same as usual’
+
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+
+9. Play. Being able to laugh, to play, and to enjoy recrea- tional activities.
+Being able to laugh, to play, to enjoy recreational activities – variables S_W_HAPPYM, S_W_HAPPYL, S_W_HAPPYML, 
+
+S_W_EACTIVEM, S_W_EACTIVEML, S_W_EACTIVEML
+BHPS variable (JGHQL) and question –
+‘‘Have you recently.... been feeling reasonably happy, all things considered??’’
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+```
+
+S_W_HAPPYM has a value one for those answering ‘More so than usual’, S_W_HAPPYL for those answering ‘Less so than usual’ and S_W_HAPPYML for those answering ‘Much less than usual’. The base is those answering ‘Same as usual’
+BHPS variable (JGHQG) and question –
+‘‘Have you recently. . . been able to enjoy your normal day- to-day activities?’’
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+```
+
+S_W_EACTIVEM has a value one for those answering ‘More so than usual’, S_W_EACTIVEL for those answering ‘Less so than usual’ and S_W_EACTIVEML for those answering ‘Much less than usual’. The base is those answering ‘Same as usual’.
+10. Control Over One’s Environment
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+```
+
+CAPABILITIES AND WELL-BEING 51
+A. Political. Being able to participate effectively in political choices that govern one’s life; having the right of political participation, protection of free speech and association.
+B. Material. Being able to hold property (both land and movable goods), and having property rights on an equal basis with others; having the right to seek employment on an equal basis with others; having the freedom from unwarranted search and seizure. In work, being able to work as a human being, exercising practical reason and entering into meaningful rela- tionships of mutual recognition with other workers.
+Being able to participate effectively in political choices – variable S_VOTE
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+```
+
+BHPS variable (JVOTE7) and question –
+‘‘Did you vote in this (past) year’s general election?’’
+Those who couldn’t vote are coded one others are coded 0. Having the right to seek employment on an equal basis –
+variables S_HL_PWORK, S_HL_NAWORK, S_HL_ AWORKL, S_HL_AWORKLTL, S_HL_AWORKS use
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+```
+
+BHPS variable (JHLENDW) and question –
+‘‘Does your health keep you from doing some types of work?’’ and
+
+BHPS variable (JHLLTWA) and question –
+‘‘For work you can do, how much does your health limit the amount of work you can do?’’
+S_HL_PWORK is coded as one for those answering Yes’ to JHLENDW and S_HL_NAWORK for those answering ‘Can do nothing’. The base is those answering ‘No’.
+S_HL_AWORKL is coded as one for those answering ‘A lot’ to JHLLTWA, S_HLAWORKLTL for those answering ‘Just a little’, S_HLAWORKS for those answering ‘Somewhat’. The base is those answering ‘Not at all’.
+Satisfaction variables S_OALL, S_HEALTH, S_H_IN- COME, S_HOUSE, S_PARTNER2, S_JOB2, S_SOCIAL, S_LEISURE, S_QLEISURE
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+```
+
+BHPS variable (JLFSATO) and question
+‘‘How dissatisfied or satisfied are you with your life overall?’’ S_OALL coded 1 -7
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+```
+
+BHPS variable JLFSAT1 ) and question
+‘‘How dissatisfied or satisfied are you with your health?’’
+S_HEALTH coded 1 = Not satisfied at all – 7 = Com- pletely satisfied
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+```
+
+JBHPS variable (JLFSAT2) and question
+‘‘How dissatisfied or satisfied are you with the income of your household?’’
+S_H_INCOME coded 1 = Not satisfied at all – 7 = Completely satisfied
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+```
+
+BHPS variable (JLFSAT3) and question
+‘‘How dissatisfied or satisfied are you with your house/flat?’’ S_HOUSE coded 1 = Not satisfied at all – 7 = Completely satisfied
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+```
+
+BHPS variable (JLFSAT4) and question
+‘‘How dissatisfied or satisfied are you with your husband/
+wife/partner?’’S_PARTNER2 coded 0 = no partner, 1 = Not satisfied at
+all – 7 = Completely satisfied
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+```
+
+BHPS variable (JLFSAT5) and question
+‘‘How dissatisfied or satisfied are you with your job?’’ S_JOB2 coded 0 = no job, 1 = Not satisfied at all –
+7 = Completely satisfied
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+```
+
+BHPS variable (JLFSAT6) and question
+‘‘How dissatisfied or satisfied are you with your social life?’’ S_SOCIAL coded 1 = Not satisfied at all – 7 = Completelysatisfied
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+```
+
+#TYYTYVÄISYYS VAPAA-AJAN MÄÄRÄÄN. BHPS variable (JLFSAT7) and question‘‘How dissatisfied or satisfied are you with the amount of leisure time you have?’’S_QLEISURE coded 1 = Not satisfied at all – 7 = Completely satisfied
+```{r}
+BHPS_data$S_QLEISURE <- BHPS1$JLFSAT7
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0]<-
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 1] <- 
+BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE == 2] <-
+```
+
+#TYYTYVÄISYYS VAPAA-AJAN VIETTOTAPOHIN. BHPS variable (JLFSAT8) and question ‘‘How dissatisfied or satisfied are you with the way youspend your leisure?’’ S_LEISURE 1 = Not satisfied at all – 7 = Completelysatisfied
+```{r}
+BHPS_data$S_LEISURE <- BHPS1$JLFSAT8
+BHPS_data$S_LEISURE[BHPS_data$S_LEISURE< 0]<-
+BHPS_data$S_LEISURE[BHPS_data$S_LEISURE == 1] <- 
+BHPS_data$S_LEISURE[BHPS_data$S_LEISURE == 2] <-
+```
+
+
+
+
+
+# removing the "Value = -9	Label = Missing or wild; Value = -8	Label = Inapplicable; Value = -7	Label = Proxy and or phone; Value = -2	Label = Refused; Value = -1	Label = Don't know"  WAS THIS IN THEIR ARTICLE???? 
+
+
+
+
+write.csv(BHPS_data, file = "/Applications/IODS-project/data/BHPS_data.csv")
+BHPS_data <- read.csv(file = "/Applications/IODS-project/data/BHPS_data.csv", sep=",", header =TRUE)
+BHPS_data
+
+
+
+

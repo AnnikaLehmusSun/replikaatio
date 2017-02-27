@@ -1,0 +1,233 @@
+---
+title: "Replikaatio"
+author: "Annika Lehmus-Sun"
+output: html_document
+---
+#REPLIKOITAVA TUTKIMUS JA ANALYYSI
+Tutkimus: anand et al. toimintamahdollisuuksien teoria, alkuperäinen julkaistu artikkeli analyysista löytyy täältä: [Anand et al.](www.osoite.tähän.fi)
+
+#AINEISTO JA MUUTTUJAT
+British household panel Survey [BHPS] vuosi 2000. Lisätietoa aineistosta löydät täältä: [BHPS 2000](ja töhön www.osoitetta.fi)
+
+#RAVINTO: Being able to be adequately nourished – variable S_HL_NOURIS HBHPS variable (JHSCANE) and question –‘‘Here is a list of things which people might have or do. 
+#Please look at this card and tell me which things you (and your household) have or do? Eat meat, chicken, fish every second day.’’Yes coded as one.  -- > ongelmallinen, ei kerros ollenkaan mitä tehdä heille jotka vastasivat 2 eli ei? 
+```{r}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(haven, ggplot2,knitr, pander,descr,foreign,dplyr,Hmisc,psych,GPArotation,plyr, dplyr, rmarkdown)
+BHPS <- read.csv(file = "/Applications/IODS-project/data/BHPS.csv", sep=",", header =TRUE)
+BHPS$X <- NULL
+dim(BHPS)
+describe(BHPS)
+```
+
+JHLLT Does your health in any way limit your daily activities compared to most people of your age?
+JHSCANE Here is a list of things which people might have or do. Please look at this card and tell me which things you (and your household) have or do? Eat meat, chicken, fish every second day) 
+JHSCNTE Would you like to be able to eat meat, chicken, fish at least every second day, but must do without because you cannot afford it?
+JLKMOVE If you could choose, would you stay here in your present home or would you prefer to move somewhere else?
+XPMOVE Even though you may not want to move) Do you expect you will move in the coming year?
+JCARUSE Do you normally have access to a car or van that you can use whenever you want to?
+JHSPRBQ Does your accommodation have any of the following problems? Vandalism or crime in the area
+JQFEDHI Education
+JGHQA Have you recently been able to concentrate on whatever you’re doing?
+JGHQB Have you recently lost much sleep over worry?
+JGHQE Have you recently felt constantly under strain? 
+JGHQI Have you recently been feeling unhappy or depressed?
+JGHQJ Have you recently been losing confidence in yourself? 
+JGHQD Have you recently felt capable of making decisions about things? 
+JGHQF Have you recently felt you couldn’t overcome your difficulties?
+JGHQH Have you recently been able to face up to problems?
+JHSCANB Here is a list of things which people might have or do. Please look at this card and tell me which things you (and your household) have or do? Pay for a week’s annual holiday away from home.
+JHSCNTB Would you like to be able to pay for a week’s annual holiday away from home, but must do without because you cannot afford it?
+JHSCAND Here is a list of things which people might have or do. Please look at this card and tell me which things you (and your household) have or do? Buy new, rather than second hand, clothes.
+JHSCNTD Would you like to be able to buy new, rather than second hand, clothes, but must do without because you cannot afford it?
+JHSCANF Here is a list of things which people might have or do. Please look at this card and tell me which things you (and your household) have or do? Have friends or family for a drink or meal at least once a month
+JHSCNTF Would you like to be able to have friends or family for a drink or meal at least once a month, but must do without because you cannot afford it?
+JGHQK Have you recently been thinking of yourself as a worthless person? 
+JGHQC Have you recently felt that you were playing a useful part in things?
+JGHQL Have you recently been feeling reasonably happy, all things considered?
+JGHQG Have you recently been able to enjoy your normal day- to-day activities?
+JVOTE7 Did you vote in this (past) year’s general election?
+JHLENDW Does your health keep you from doing some types of work?
+JHLLTWA For work you can do, how much does your health limit the amount of work you can do?
+JLFSATO How dissatisfied or satisfied are you with your life overall?
+JLFSAT1 How dissatisfied or satisfied are you with your health?
+JLFSAT2 How dissatisfied or satisfied are you with the income of your household?
+JLFSAT3 How dissatisfied or satisfied are you with your house/flat?
+JLFSAT4 How dissatisfied or satisfied are you with your husband/ wife/partner?
+JLFSAT5 How dissatisfied or satisfied are you with your job?
+JLFSAT6 How dissatisfied or satisfied are you with your social life?
+JLFSAT7 How dissatisfied or satisfied are you with the amount of leisure time you have?
+JLFSAT8 How dissatisfied or satisfied are you with the way you spend your leisure?
+
+##MUUTTUJAMUUNNOKSET
+###Puuttuvat tiedot
+tämähän kannattaa nyt kirjata raporttiin – tutkimusta ei voi täysin varmasti toistaa, kun ei ole kerrottu mitä puuttuville
+tiedoille on tehty, ja päättää itse miten etenet –eli varmaan tuo NA on loogisin oletus.
+
+#REPLIKAATIO
+##MALLI 1
+##MALLI 2
+##MALLI 3
+##MALLI 4
+##MALLI 5
+##MALLI 6
+##MALLI 7
+
+```{r}
+Malli1 <- lm(tyytyvaisyys~yleistynytluottamus+sosiaalisetverkostot+asuupuolisonkanssa+tyytyvaisyysinstituutiot, data = ESS2014v2)
+Malli1
+summary(Malli1)
+Malli2 <-lm(tyytyvaisyys~turvallisuudentunne+terveys, data = ESS2014v2)
+Malli2
+summary(Malli2)
+Malli3 <- lm(tyytyvaisyys~nettotulot+koulutusvuosina+sukupuoli+ika, data = ESS2014v2)
+Malli3
+summary(Malli3)
+```
+ 
+```{r}
+Malli4 <- lm(tyytyvaisyys~turvallisuudentunne+terveys+nettotulot+koulutusvuosina+sukupuoli+ika, data = ESS2014v2)
+Malli4
+summary(Malli4)
+Malli5<-lm(tyytyvaisyys~yleistynytluottamus+sosiaalisetverkostot+asuupuolisonkanssa+tyytyvaisyysinstituutiot+nettotulot+koulutusvuosina+sukupuoli+ika, data = ESS2014v2)
+Malli5
+summary(Malli5)
+Malli6 <- lm(tyytyvaisyys~yleistynytluottamus+sosiaalisetverkostot+asuupuolisonkanssa+tyytyvaisyysinstituutiot+turvallisuudentunne+terveys, data = ESS2014v2)
+Malli6
+summary(Malli6)
+Malli7 <- lm(tyytyvaisyys~yleistynytluottamus+sosiaalisetverkostot+asuupuolisonkanssa+tyytyvaisyysinstituutiot+turvallisuudentunne+terveys+nettotulot+koulutusvuosina+sukupuoli+ika, data = ESS2014v2)
+Malli7
+summary(Malli7)
+```
+
+```{r}
+Malli1on <- lm(onnellisuus~yleistynytluottamus+sosiaalisetverkostot+tyytyvaisyysinstituutiot+asuupuolisonkanssa, data = ESS2014v2)
+Malli1on
+summary(Malli1on)
+Malli2on <- lm(onnellisuus~turvallisuudentunne+terveys, data = ESS2014v2)
+Malli2on
+summary(Malli2on)
+Malli3on <- lm(onnellisuus~nettotulot+koulutusvuosina+sukupuoli+ika, data = ESS2014v2)
+Malli3on
+summary(Malli3on)
+```
+
+
+```{r}
+Malli4on <- lm(onnellisuus~turvallisuudentunne+terveys+nettotulot+koulutusvuosina+sukupuoli+ika, data = ESS2014v2)
+Malli4on
+summary(Malli4on)
+Malli5on <-lm(onnellisuus~yleistynytluottamus+sosiaalisetverkostot+asuupuolisonkanssa+tyytyvaisyysinstituutiot+nettotulot+koulutusvuosina+sukupuoli+ika, data = ESS2014v2)
+Malli5on
+summary(Malli5on)
+Malli6on <- lm(onnellisuus~yleistynytluottamus+sosiaalisetverkostot+asuupuolisonkanssa+tyytyvaisyysinstituutiot+turvallisuudentunne+terveys, data = ESS2014v2)
+Malli6on
+summary(Malli6on)
+Malli7on <- lm(onnellisuus~yleistynytluottamus+sosiaalisetverkostot+asuupuolisonkanssa+tyytyvaisyysinstituutiot+turvallisuudentunne+terveys+nettotulot+koulutusvuosina+sukupuoli+ika, data = ESS2014v2)
+Malli7on
+summary(Malli7on)
+```
+
+```{r, echo=FALSE}
+library(GGally)
+library(ggplot2)
+model1 <- lm(Points ~ Attitude + deep + Age, data = learning2014)
+summary(model1)
+```
+
+
+
+
+
+#TULOKSET
+
+#LÄHTEET
+
+
+
+
+
+
+#MIKÄ TÄMÄ ON?
+
+```{r}
+ESS2014v2 <- ESS2014 %>% 
+  filter(!(is.na(onnellisuus) | is.na(tyytyvaisyys) | is.na(yleistynytluottamus)  | is.na(tyytyvaisyysinstituutiot) | is.na(koulutusvuosina) | is.na(terveys) | is.na(sukupuoli) |   is.na(sosiaalisetverkostot) | is.na(asuupuolisonkanssa) | is.na(turvallisuudentunne) | is.na(nettotulot) | is.na(ika))) 
+```
+
+
+
+##Jotain kuvioita? MALLEISTA, JOTKA EROAVAT K&R:N AINEISTOSTA
+
+taulukko 3: onnellisuus ja nettotulot 
+taulukko 5: tyytyväisyys ja sosiaaliset verkostot 
+
+## onnellisuus ja kotitalouden nettotulot (kaikki muut paitsi ekologiset tekijät huomoitu)
+```{r}
+ggplot(ESS2014v2, aes(nettotulot, Malli5on$fitted.values)) + stat_summary(fun.y=mean, geom="line") + ylab("Ennustettu onnellisuus") + ylim(0,1) +  
+  geom_segment(x = 0, xend = 1, y = 0.52 + 0.01, yend = 0.52 + 0.01*1, colour="green") +    xlim(0, 1)
+```
+```{r}
+ggplot(ESS2014v2, aes(nettotulot, Malli5on$fitted.values)) + geom_errorbar(ymin=0.03, ymax=0.06, width=.2) + ylim(0, 1) +
+geom_segment(x = 0, xend = 1, y = 0.52 + 0.01, yend = 0.52 + 0.01*1, colour="green") +    xlim(0, 1) +  geom_errorbar(ymin=0.01, ymax=0.03, width=.2) + ylim(0, 1)
+```
+
+
+geom_abline(intercept=0.52, slope=0.01, colour='blue', na.rm = FALSE)
+
+## tyytyväisyys ja sukupuoli (kun sosiaaliset tekijät huomioitu) malli5
+```{r}
+ggplot(ESS2014v2, aes(sukupuoli, Malli5$fitted.values)) + coord_cartesian(ylim=c(0,1)) + ylab("Ennustettu tyytyvaisyys") + xlab("sukupuoli") +   geom_smooth(method='lm') +
+  geom_point(position = "jitter", size=0.1) + 
+  geom_segment(aes(x = 0, xend = 1, y = 0.41 + 0.03, yend = 0.41 + 0.03*1, colour="K&R")) +
+    xlim(0, 1)
+
+
+
+qplot(ESS2014v2$sukupuoli,Malli5$fitted.values)+geom_errorbar(aes(ESS2014v2$sukupuoli, ymin=0.03, ymax=0.05), width=0.25)
+
+```
+
+##Pelkät keskivirhe pallukat 
+Malli5: sukupuoli
+```{r}
+
+ESS2014v2$sukupuoli = factor(ESS2014v2$sukupuoli, levels = 0:1, labels = c("", "Nainen"))
+
+
+ggplot(ESS2014v2, aes(sukupuoli, Malli5$fitted.values)) + geom_errorbar(ymin=0.007, ymax=0.0019, width=.7,size=1.5, colour="rosybrown1") + ylim(0, 0.05) + ylab("Ennustettu tyytyvaisyys") + xlab("rosybrown1") +
+  geom_abline(intercept=0.41, slope=0.03) +
+  geom_errorbar(ymin=0.02, ymax=0.04, width=.7,size=1.5, color="skyblue3") + ylim(0, 0.05) +
+  theme_dark(base_size = 12, base_family = "") + ggtitle("Sukupuolen vaikutus tyytyvaisyyteen")
+ 
+
+
+```
+versio 2
+1:10, xaxt='n', ann=FALSE)
+```{r}
+
+ESS2014v2$sukupuoli = factor(ESS2014v2$sukupuoli, levels = 0:1, labels = c("vakio", "Nainen"))
+ggplot(ESS2014v2, aes(sukupuoli, Malli5$fitted.values) 0:1, xaxt='n', ann=FALSE) + geom_errorbar(ymin=0.007, ymax=0.0019, width=.7,size=1.5, colour="peachpuff1") + ylim(0, 0.05) + ylab("Ennustettu tyytyvaisyys") + xlab("Sukupuoli") +
+  geom_abline(intercept=0.41, slope=0.03) +
+  geom_errorbar(ymin=0.02, ymax=0.04, width=.7,size=1.5, color="skyblue3") + ylim(0, 0.05) +
+  theme_dark(base_size = 12, base_family = "") + ggtitle("Sukupuolen vaikutus tyytyvaisyyteen")
+```
+
+Malli5on: tulot
+```{r}
+ESS2014v2$nettotulot = factor(ESS2014v2$nettotulot, levels = 0:1, labels = c("kotitalous"))
+
+ggplot(ESS2014v2, aes(nettotulot, Malli5on$fitted.values)) + geom_errorbar(ymin=0.032, ymax=0.054, width=0.7, size=1.5, color="rosybrown1") +ylim(0, 0.1) + ylab("Ennustettu onnellisuus")  + xlab("Kotitalouden nettotulot") +
+ geom_abline(intercept = 0.54, slope = 0.01) +
+  geom_errorbar(ymin=0, ymax=0.02, width=0.7, size=1.5, colour="skyblue3") +ylim(0, 0.1) +
+    theme_dark(base_size = 12, base_family = "") + ggtitle("Tulojen vaikutus onnellisuuteen")
++
+legend()
+  legend(0.5, 0.08, legend=c("2003", "2014"), colour=c("peachpuff1", "skyblue3"))
+
+
+
+
+```
+

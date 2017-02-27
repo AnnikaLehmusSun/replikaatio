@@ -29,7 +29,7 @@ BHPS_data$S_HL_Limit[BHPS_data$S_HL_Limit < 0] <-NA
 BHPS_data$S_HL_Limit[BHPS_data$S_HL_Limit == 1] <- 1
 BHPS_data$S_HL_Limit[BHPS_data$S_HL_Limit == 2] <- 0
 
-#RAVINTO: Being able to be adequately nourished – variable S_HL_NOURIS HBHPS variable (JHSCANE) and question –‘‘Here is a list of things which people might have or do. 
+#RAVINTO: Being able to be adequately nourished – variable S_HL_NOURISH BHPS variable (JHSCANE) and question –‘‘Here is a list of things which people might have or do. 
 #Please look at this card and tell me which things you (and your household) have or do? Eat meat, chicken, fish every second day.’’Yes coded as one.
 #Those who answer no are asked (BHPS Variable JHSCNTE) –‘‘Would you like to be able to eat meat, chicken, fish at least every second day, 
 #but must do without because you cannot afford it?’’No coded as one. Yes coded as 0.

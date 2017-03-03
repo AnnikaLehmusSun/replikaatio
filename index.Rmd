@@ -1,7 +1,15 @@
 ---
-title: "Replikaatio"
+title: "Replikaatio-työpaja, kevät 2017"
 author: "Annika Lehmus-Sun"
-output: html_document
+output:
+  html_document:
+    theme: yeti
+    toc: true
+    toc_depth: 2
+    fig_caption: true
+    fig_width: 6
+    fig_height: 4
+    
 ---
 #REPLIKOITAVA TUTKIMUS JA ANALYYSI
 Replikoitavaksi tutkimukseksi valitsin Paul Anandin, Graham Hunterin ja Ron Smithin aineistoanalyysin. Anand ja muut tarkastelivat toimintamahdollisuuksien ja elämään tyytyväisyyden yhteyksiä ja tulokset ovat esitetty artikkelissa "Capabilities and well-beingM evidence based on the Sen-Nussbaum approach to welfare". Artikkeli löytyy täältä: [Anand et al.](http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf) Tutkimuksessaan, Anand, Hunter ja Smith käyttävät lineaarista regressioanalyysia tutkiessaan erilaisten toimintamahdollisuuksien korrelaatiota elämään tyytyväisyyteen. Toimintamahdollisuus-tekijät he ovat operationalisoineet Martha Nussbaumin 10 toimintamahdollisuuden listasta. 
@@ -9,7 +17,7 @@ Replikoitavaksi tutkimukseksi valitsin Paul Anandin, Graham Hunterin ja Ron Smit
 ##Aineisto ja muuttuja
 Aineistona on täysin sama kuin Anandin, Hunterin ja Smithin analyysissakin, eli British Household Panel Survey [BHPS] ja siitä vuoden 2000 otanta eli kymmennes vuosi koko paneelitutkimuksesta. BHPS pitää sisällään tietoa yli 16-vuotiaiden elämäntavoista, hyvinvoinnista ja yleisesti hyvin kattavasti elämän eri osa-alueista. BHPS on kerätty pitkälti kotona tehtyinä haastatteluilla Lisätietoa vuoden 2000 aineistosta löydät täältä: [BHPS 2000](https://www.iser.essex.ac.uk/bhps/documentation/pdf_versions/index.html) ja yleisesti BHPS:stä täältä: [British household panel survey](https://www.iser.essex.ac.uk/bhps)
 
-Koska Anandin ja muiden analyysissa miehiä ja naisia on tarkasteltu erikseen, jaoin BHPS 2000 aineiston miesten ja naisten aineistoiksi. Vastaajista naisia oli yhteensä 8 426 ja miehiä 7 177. Miehiä oli siis reilu tuhat vähemmän tässä otannassa. 
+Koska Anandin, Hunterin ja Smithin analyysissa miehiä ja naisia on tarkasteltu erikseen, jaoin BHPS 2000 aineiston miesten ja naisten aineistoiksi. Vastaajista naisia oli yhteensä 8 426 ja miehiä 7 177. Miehiä oli siis reilu tuhat vähemmän tässä otannassa. 
 
 ###Muuttujamuutokset
 Muuttujamuunnokset, jotka ovat tehty replikoitavan analyysin pohjalta ja mukaisesti löytyvät täältä: [muuttujamuunnokset replikaatiota varten](https://github.com/AnnikaLehmusSun/replikaatio/blob/master/data/muuttujamuunnokset.R)
@@ -22,161 +30,143 @@ Value = -7	Label = Proxy and or phone
 Value = -2	Label = Refused
 Value = -1	Label = Not answered
 
-Koska Anand ja muut eivät maininneet, mitä he tekivät näille arvoille (-1 - (-7)) analyysissaan, heikentää se luonnollisesti tutkimuksen toistettavuutta. Oletan, että puuttuvat arvot ovat merkitty NA, eli non available - muotoon, joten uudelleen koodasin arvot -1 -(-7) muotoon NA. 
+Koska Anand, Hunter ja Smith eivät maininneet, mitä he tekivät näille arvoille (-1 - (-7)) analyysissaan, heikentää se luonnollisesti tutkimuksen toistettavuutta. Oletan, että puuttuvat arvot ovat merkitty NA, eli non available - muotoon, joten uudelleen koodasin arvot -1 -(-7) muotoon NA. 
 
 ###Muuttujalista
 Anand, Hunter ja Smith käyttivät analyysissaan seuraavia muuttujia (tummennetulla koodi, jonka vieressä lomakkeessa kysytty kysymys):
 
-1. **S_HL_LIMIT** Does your health in any way limit your daily activities compared to most people of your age?
-2. **S_HL_NOURISH** Here is a list of things which people might have or do. Please look at this card and tell me which things you (and your household) have or do? Eat meat, chicken, fish every second day) 
- + 2a.  Would you like to be able to eat meat, chicken, fish at least every second day, but must do without because you cannot afford it?
-3. **S_H_LAC_MOVE** If you could choose, would you stay here in your present home or would you prefer to move somewhere else?
-  + 3a. Even though you may not want to move) Do you expect you will move in the coming year?
-5. **S_S_CAR** Do you normally have access to a car or van that you can use whenever you want to?
-6. **S_H_CRIME** Does your accommodation have any of the following problems? Vandalism or crime in the area
-7. **S_S_EDUCATE** Education
-8. **S_W_CONCB**; **S_W_CONCL**; **S_W_CONCML** Have you recently been able to concentrate on whatever you’re doing (‘Better than usual’;‘Less than usual’;‘Much less than usual)
-9. **S_W_SLEEPN**; **S_W_SLEEPM**; **S_W_SLEEPMM** Have you recently lost much sleep over worry?('Not at all’; ‘Rather more than usual’; 'Much more than usual')
-10. **S_W_STRAINN**; **S_W_STRAINM**; **S_W_STRAINMM**  Have you recently felt constantly under strain? ('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
-11. **S_W_DEPRESSN**; **S_W_DEPRESSM**; **S_W_DEPRESSMM** Have you recently been feeling unhappy or depressed? ('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
-12. **S_W_CONFIDENTN**; **S_W_CONFIDENTM**; **S_W_CONFIDENTMM** Have you recently been losing confidence in yourself? ('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
-13. **S_W_DECIDEM**; **S_W_DECIDEL**; **S_W_DECIDEML** Have you recently felt capable of making decisions about things? ('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
-14. **S_W_DIFICULTN**; **S_W_DIFICULTM**; **S_W_DIFICULTMM** Have you recently felt you couldn’t overcome your difficulties?('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
-15. **S_W_FACEUPM**; **S_W_FACEUPL**; **S_W_FACEUPMML** Have you recently been able to face up to problems?('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
-16. **S_S_HOLIDAY** Here is a list of things which people might have or do. Please look at this card and tell me which things you (and your household) have or do? Pay for a week’s annual holiday away from home.
- + 16a. Would you like to be able to pay for a week’s annual holiday away from home, but must do without because you cannot afford it?
-17. **S_S_CLOTHES** Here is a list of things which people might have or do. Please look at this card and tell me which things you (and your household) have or do? Buy new, rather than second hand, clothes.
- + 17a Would you like to be able to buy new, rather than second hand, clothes, but must do without because you cannot afford it?
-18. **S_S_MEAL** Here is a list of things which people might have or do. Please look at this card and tell me which things you (and your household) have or do? Have friends or family for a drink or meal at least once a month
- +18a. Would you like to be able to have friends or family for a drink or meal at least once a month, but must do without because you cannot afford it?
-19. **S_W_WORTHN**; **S_W_WORTHM**; **S_W_WORTHMM** Have you recently been thinking of yourself as a worthless person? ('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
-20. **S_W_ROLEM**; **S_W_ROLEL**; **S_W_ROLEML** Have you recently felt that you were playing a useful part in things?('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
-21. **S_W_HAPPYM**; **S_W_HAPPYL**; **S_W_HAPPYML** Have you recently been feeling reasonably happy, all things considered?('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
-22. **S_W_EACTIVEM**; **S_W_EACTIVEL**; **S_W_EACTIVEML** Have you recently been able to enjoy your normal day- to-day activities?('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
-23. **S_VOTE** Did you vote in this (past) year’s general election?
-24. **S_HL_PWORK**;**S_HL_NAWORK** Does your health keep you from doing some types of work? ('Yes'; 'Can do nothing')
-25. **S_HL_AWORKL**; **S_HLAWORKLTL**; **S_HLAWORKS**  For work you can do, how much does your health limit the amount of work you can do? ('A lot'; 'Just a little'; 'Somewhat')
-26. **S_OALL** How dissatisfied or satisfied are you with your life overall?
-27. **S_HEALTH** How dissatisfied or satisfied are you with your health?
-28. **S_H_INCOME** How dissatisfied or satisfied are you with the income of your household?
-29. **S_HOUSE** How dissatisfied or satisfied are you with your house/flat?
-30. **S_PARTNER2** How dissatisfied or satisfied are you with your husband/ wife/partner?
-  **D_NOPARTNER** S_partner - does not apply
-31. **S_JOB2** How dissatisfied or satisfied are you with your job?
-  **D_NOJOB** S_job2 - does not apply
-32. **S_SOCIAL** How dissatisfied or satisfied are you with your social life?
-33. **S_QLEISURE** How dissatisfied or satisfied are you with the amount of leisure time you have?
-34. **S_LEISURE** How dissatisfied or satisfied are you with the way you spend your leisure?
+* **S_HL_LIMIT** Does your health in any way limit your daily activities compared to most people of your age?
+* **S_HL_NOURISH** Here is a list of things which people might have or do. Please look at this card and tell me which things you (and your household) have or do? Eat meat, chicken, fish every second day) 
+   * + Would you like to be able to eat meat, chicken, fish at least every second day, but must do without because you cannot afford it?
+* **S_H_LAC_MOVE** If you could choose, would you stay here in your present home or would you prefer to move somewhere else?
+   * + Even though you may not want to move) Do you expect you will move in the coming year?
+* **S_S_CAR** Do you normally have access to a car or van that you can use whenever you want to?
+* **S_H_CRIME** Does your accommodation have any of the following problems? Vandalism or crime in the area
+* **S_S_EDUCATE** Education
+* **S_W_CONCB**; **S_W_CONCL**; **S_W_CONCML** Have you recently been able to concentrate on whatever you’re doing (‘Better than usual’;‘Less than usual’;‘Much less than usual)
+* **S_W_SLEEPN**; **S_W_SLEEPM**; **S_W_SLEEPMM** Have you recently lost much sleep over worry?('Not at all’; ‘Rather more than usual’; 'Much more than usual')
+* **S_W_STRAINN**; **S_W_STRAINM**; **S_W_STRAINMM**  Have you recently felt constantly under strain? ('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
+* **S_W_DEPRESSN**; **S_W_DEPRESSM**; **S_W_DEPRESSMM** Have you recently been feeling unhappy or depressed? ('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
+* **S_W_CONFIDENTN**; **S_W_CONFIDENTM**; **S_W_CONFIDENTMM** Have you recently been losing confidence in yourself? ('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
+* **S_W_DECIDEM**; **S_W_DECIDEL**; **S_W_DECIDEML** Have you recently felt capable of making decisions about things? ('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
+* **S_W_DIFICULTN**; **S_W_DIFICULTM**; **S_W_DIFICULTMM** Have you recently felt you couldn’t overcome your difficulties?('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
+* **S_W_FACEUPM**; **S_W_FACEUPL**; **S_W_FACEUPMML** Have you recently been able to face up to problems?('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
+* **S_S_HOLIDAY** Here is a list of things which people might have or do. Please look at this card and tell me which things you (and your household) have or do? Pay for a week’s annual holiday away from home.
+  * + Would you like to be able to pay for a week’s annual holiday away from home, but must do without because you cannot afford it?
+* **S_S_CLOTHES** Here is a list of things which people might have or do. Please look at this card and tell me which things you (and your household) have or do? Buy new, rather than second hand, clothes.
+ *+ Would you like to be able to buy new, rather than second hand, clothes, but must do without because you cannot afford it?
+* **S_S_MEAL** Here is a list of things which people might have or do. Please look at this card and tell me which things you (and your household) have or do? Have friends or family for a drink or meal at least once a month
+ *+ Would you like to be able to have friends or family for a drink or meal at least once a month, but must do without because you cannot afford it?
+* **S_W_WORTHN**; **S_W_WORTHM**; **S_W_WORTHMM** Have you recently been thinking of yourself as a worthless person? ('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
+* **S_W_ROLEM**; **S_W_ROLEL**; **S_W_ROLEML** Have you recently felt that you were playing a useful part in things?('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
+* **S_W_HAPPYM**; **S_W_HAPPYL**; **S_W_HAPPYML** Have you recently been feeling reasonably happy, all things considered?('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
+* **S_W_EACTIVEM**; **S_W_EACTIVEL**; **S_W_EACTIVEML** Have you recently been able to enjoy your normal day- to-day activities?('Not at all’;‘Rather more than usual’; ‘Much More than usual’)
+* **S_VOTE** Did you vote in this (past) year’s general election?
+* **S_HL_PWORK**;**S_HL_NAWORK** Does your health keep you from doing some types of work? ('Yes'; 'Can do nothing')
+* **S_HL_AWORKL**; **S_HLAWORKLTL**; **S_HLAWORKS**  For work you can do, how much does your health limit the amount of work you can do? ('A lot'; 'Just a little'; 'Somewhat')
+* **S_OALL** How dissatisfied or satisfied are you with your life overall?
+* **S_HEALTH** How dissatisfied or satisfied are you with your health?
+* **S_H_INCOME** How dissatisfied or satisfied are you with the income of your household?
+* **S_HOUSE** How dissatisfied or satisfied are you with your house/flat?
+* **S_PARTNER2** How dissatisfied or satisfied are you with your husband/ wife/partner?
+  * + **D_NOPARTNER** S_partner - does not apply
+* **S_JOB2** How dissatisfied or satisfied are you with your job?
+  * + **D_NOJOB** S_job2 - does not apply
+* **S_SOCIAL** How dissatisfied or satisfied are you with your social life?
+* **S_QLEISURE** How dissatisfied or satisfied are you with the amount of leisure time you have?
+* **S_LEISURE** How dissatisfied or satisfied are you with the way you spend your leisure?
+
+
+
 
 
 #REPLIKAATIO
-```{r}
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(haven, ggplot2,knitr, pander,descr,foreign,dplyr,Hmisc,psych,GPArotation,plyr, dplyr, rmarkdown)
+```{r, recho=FALSE}
+pacman::p_load(haven, ggplot2,knitr, pander,descr,foreign,dplyr,Hmisc,psych,GPArotation,plyr, dplyr, rmarkdown, GGally, modelr)
 BHPS_naiset <- read.csv(file = "/Applications/replikaatio/data/BHPS_naiset.csv", sep=",", header =TRUE)
-dim(BHPS_naiset)
 BHPS_miehet <- read.csv(file = "/Applications/replikaatio/data/BHPS_miehet.csv", sep=",", header =TRUE)
-dim(BHPS_miehet)
 BHPS_naiset$X <- NULL
 BHPS_miehet$X <- NULL
 ```
 
 ##Malli 1
-####Overall satisfaction regressed on elements of satisfaction (model 1) – females
-```{r, echo=FALSE}
-library(GGally)
-library(ggplot2)
+###Tyytyväisyys elämään kokonaisuutena ja osatyytyväisyydet, naiset 
+```{r}
 model1F <- lm(S_OALL ~ D_NOJOB + D_NOPARTNER + S_HEALTH + S_HOUSE + S_H_INCOME + S_PARTNER2 + S_JOB2 + S_SOCIAL + S_LEISURE + S_QLEISURE, data = BHPS_naiset)
 summary(model1F)
 ```
-####Overall satisfaction regressed on elements of satisfaction (model 1) – males
+
+
+###Tyytyväisyys elämään kokonaisuutena ja osatyytyväisyydet, miehet
 ```{r}
 model1M <- lm(S_OALL ~ D_NOJOB + D_NOPARTNER + S_HEALTH + S_HOUSE + S_H_INCOME + S_PARTNER2 + S_JOB2 + S_SOCIAL + S_LEISURE + S_QLEISURE, data = BHPS_miehet)
 summary(model1M)
 ```
 
-### residuaalit malliin 2 ja 3
-sivun 20 alalaidan kuvauksen perusteella tulkitsen, että he ovat ensin tehneet 10 regressiota, yhden jokaiselle tyytyväisyyden osa-alueille (kuvaus s. 18), joissa selittäjinä on capabilities, ja tallentaneet tuosta residuaalit aineistoon, ja käyttävät niitä alkuperäisten muuttujien sijasta: siis vaikka tyytyväisyys sosiaaliseen elämään -kysymys mittaa oikeastaan tyytyväisyyttä SEKÄ persoonallisuutta, ja regressiolla yritetään siivota tuo persoonallisuuden osuus pois, jotta saadaan puhdas tyytyväisyys-mittari.
-malli$residuals (vai onkohan $resids) sisältää nämä, ja voit siis liittää muuttujaksi aineistoon
-ihan normaalisti 
-(aineisto$resid_social <- malli_social$residuals) tms.
-varmuudeksi: nuo residuaalit eivät siis tule noista ensimmäisistä malleista, vaan ensin tehdään 10 regressiomallia, joissa selitettävänä on vuorollaan kukin osa-aluetyytyväisyyksistä.
-miksi BHPS$RESIDF <- model1F$residuals ei toiminut?  Voisit kokeilla modelr-paketin add_residuals() -funktiota, se ainakin osaa ottaa huomioon puuttuvat tiedot.
 
-### 10 regressiomallia + residuaalit, naiset
+
+###Yhdenmukaisuus Anandin, Hunterin ja Smithin analyysiin
+Naisten kohdalla mallit ovat käytännössä samat oman mallin ja Anandin, Hunterin ja Smithin [AHS] mallin kanssa. AHS:n malli löytyy sivulta 20 "table 2" [täältä](http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf) 
+
+Myös miesten kohdalla mallit olivat pitkälti samat yhtä poikkeusta lukuunottamatta. S_QLEISURE - muuttuja oli saanut omassa mallissani negatiivisen korrelaation tyytyväisyyden kanssa, kun taas AHS:n mallissa korrealatio oli positiivinen. Joka tapauksessa, korrelaatio oli molempien malleissa erittäin pieni n. 0.0005. AHS:n malli löytyy sivulta 21 "table 3",[täältä](http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf)
+
+ 
+
+##Residuaalit malleihin 2 ja 3
+Malleissa 2 ja 3 Anand, Hunter ja Smith ovat lisänneet personallisuuteen (personality traits) liittyvät tekijät, eli katsoneet millä tavoin eri tekijät korreloivat keskenään, ja lisänneet näistä residuaali-muuttujat malleihin 2 ja 3. He tekivät siis 10 regressioanalyysia, joissa vuorollaan aina yksi tyytyväisyyden osatekijä (kuten tyytyväisyys työhön) on selittäjänä ja selitettävänä toimintamahdollisuus-muuttujat, erikseen miehille ja naisille. Näistä regressiomalleista, he ovat tallentaneet residuaalit aineistoonsa ja käyttäneet niitä sitten alkuperäisten muuttujien sijasta. Tällä tavoin on ilmeisesti yritetty karsia persoonallisuuden osuus pois. Alla on siis koodit ensin regressiomalleihin ja sitten residuaalien tallentamiseen. Mainittakoon, että tämä kohta analyysista ei ollut kaikista selkein sisällöltään, muttei myöskään ilmaistuna Anandin, Hunterin ja Smithin analyysissa. 
+
+###Regressiomallit osa-aluetyytyväisyydet selittäjänä, naiset (koodi)
 ```{r}
-
 model1F_DNOJOB <- lm(D_NOJOB ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_naiset)
-summary(model1F_DNOJOB)
 
 model1F_DNOPARTNER <- lm(D_NOPARTNER ~  S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_naiset)
-summary(model1F_DNOPARTNER)
 
 model1F_HEALTH <- lm(S_HEALTH ~S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_naiset)
-summary(model1F_HEALTH)
 
 model1F_HOUSE <- lm(S_HOUSE ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_naiset)
-summary(model1F_HOUSE)
 
 model1F_H_INCOME <- lm(S_H_INCOME ~S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_naiset)
-summary(model1F_H_INCOME)
 
 model1F_PARTNER2 <- lm(S_PARTNER2 ~S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_naiset)
-summary(model1F_PARTNER2)
 
 model1F_JOB2 <- lm(S_JOB2 ~S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_naiset)
-summary(model1F_JOB2)
 
 model1F_SOCIAL <- lm(S_SOCIAL ~S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_naiset)
-summary(model1F_SOCIAL)
 
 model1F_SOCIAL <- lm(S_SOCIAL ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_naiset)
-summary(model1F_SOCIAL)
-
 
 model1F_LEISURE <- lm(S_LEISURE  ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_naiset)
-summary(model1F_LEISURE)
 
 model1F_QLEISURE <- lm(S_QLEISURE ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_naiset)
-summary(model1F_QLEISURE)
 ```
-### regressiomallit x 10, miehet
+
+
+###Regressiomallit osa-aluetyytyväisyydet selittäjänä, miehet (koodi)
 ```{r}
 model1M_DNOJOB <- lm(D_NOJOB ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_miehet)
-summary(model1M_DNOJOB)
 
 model1M_DNOPARTNER <- lm(D_NOPARTNER ~  S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_miehet)
-summary(model1M_DNOPARTNER)
 
 model1M_HEALTH <- lm(S_HEALTH ~S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_miehet)
-summary(model1M_HEALTH)
 
 model1M_HOUSE <- lm(S_HOUSE ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_miehet)
-summary(model1M_HOUSE)
 
 model1M_H_INCOME <- lm(S_H_INCOME ~S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_miehet)
-summary(model1M_H_INCOME)
 
 model1M_PARTNER2 <- lm(S_PARTNER2 ~S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_miehet)
-summary(model1M_PARTNER2)
 
 model1M_JOB2 <- lm(S_JOB2 ~S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_miehet)
-summary(model1M_JOB2)
 
 model1M_SOCIAL <- lm(S_SOCIAL ~S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_miehet)
-summary(model1M_SOCIAL)
 
 model1M_LEISURE <- lm(S_LEISURE  ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_miehet)
-summary(model1M_LEISURE)
 
 model1M_QLEISURE <- lm(S_QLEISURE ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_miehet)
-summary(model1M_QLEISURE)
 ```
 
-### tallennetaan residuaalit omiksi tiedostoiksi
+###Regressioanalyysien jälkeen, tallensin naisten ja miesten regressiomalleista residuaalit omiksi muuttujiksi BHPS_naiset ja BHPS_miehet aineistoihin (koodi)
 ```{r}
 #naiset ensin
-library(modelr)
 
 BHPS_naiset <- add_residuals(data=BHPS_naiset, model=model1F_DNOJOB, var="RESIDF_DNOJOB")
 BHPS_naiset <-add_residuals(data=BHPS_naiset, model=model1F_DNOPARTNER, var="RESIDF_DNOPARTNR")
@@ -205,39 +195,50 @@ BHPS_miehet <-add_residuals(data=BHPS_miehet, model=model1M_QLEISURE, var="RESID
 ```
 
 ##Malli 2
-Mallissa 2 Anand et al. ovat lisänneet metodilla (x?) personallisuuteen liittyvät tekijät, eli katsoneet millä tavoin eri tekijät korreloivat keskenään, ja lisänneet ne malleihin 2 ja 4. Tässä työssä päätin kuitenkin keskittyä vain malliin 1 ja 3, jotka ovat  tehty ilman personaan vaikutusta, sillä näidenkin analyysien toistaminen on tarpeeksi uskoakseni! Anand et al. jättivät myös itse mallin 4 ulkopuolelle, pitkälti tilan puutteen vuoksi tosin. 
 
 
-####Overall satisfaction regressed on elements of satisfaction and personality traits (model 2) – females
-```{r}
+###Tyytyväisyys elämään kokonaisuutena ja osatyytyväiset residuaaleina regressiomalleista, naiset 
+```{r, echo=FALSE}
 model2F <- lm(S_OALL ~ D_NOJOB + D_NOPARTNER + S_HEALTH + S_HOUSE + S_H_INCOME + S_PARTNER2 + S_JOB2 + S_SOCIAL + S_LEISURE + S_QLEISURE + RESIDF_DNOJOB + RESIDF_DNOPARTNR + RESIDF_HEALTH + RESIDF_HOUSE + RESIDF_H_INCOME + RESIDF_PARTNER + RESIDF_JOB + RESIDF_SOCIAL + RESIDF_LEISURE + RESIDF_QLEISURE, data = BHPS_naiset)
 summary(model2F)
-
 ```
 
-####Overall satisfaction regressed on elements of satisfaction and personality traits (model 2) – males
 
-```{r}
+###Tyytyväisyys elämään kokonaisuutena ja osatyytyväiset residuaaleina regressiomalleista, miehet 
+```{r, echo=FALSE}
 model2M <- lm(S_OALL  ~ D_NOJOB + D_NOPARTNER + S_HEALTH + S_HOUSE + S_H_INCOME + S_PARTNER2 + S_JOB2 + S_SOCIAL + S_LEISURE + S_QLEISURE + RESIDM_DNOJOB + RESIDM_DNOPARTNR + RESIDM_HEALTH + RESIDM_HOUSE + RESIDM_H_INCOME + RESIDM_PARTNER + RESIDM_JOB + RESIDM_SOCIAL + RESIDM_LEISURE + RESIDM_QLEISURE, data = BHPS_miehet)
 summary(model2M)
 ```
 
 
-##Malli 3
-####Overall satisfaction regressed on capabilities and personality traits (model 3) – females
+###Yhdenmukaisuus Anandin, Hunterin ja Smithin analyysiin
 
-```{r}
+Toisin kuin ensimmäisessä mallissa, malli 2 eroaa huomattavasti AHS:n toisesta mallista. Mielenkiintoinen huomio on, että naisten ja miesten väliset erot arvoissa ovat samanlaiset omien mallien välillä mitä AHS:n mallien välillä. Siitä huolimatta, että erot naisten ja miesten välillä tuntuu olevan samankaltaiset, itse arvot eroavat suuresti. 
+
+Naisten kohdalla selkeimmät erot tulivat työn ja partneri -muuttujien kohdalla. Etenkin  D_NOJOB, D_NOPARTNER, S_PARTNER2 ja RESIDF_DNOPARTNR - kohdissa erot olivat erityisen merkittävät. Esimerkiksi tyytyväisyyttä puolisoon mittaava S_PARTNER2 sai omassa mallissani estimaatin 0.47 ja AHS:n mallissa 1,07. Vielä suurempi ero oli D_NOPARTNER-muuttujan kohdalla, joka siis indikoi, ettei vastaajalla ole parisuhdetta, sai omassa mallissani arvon 2,89 ja AHS:n mallissa 6.48. AHS:n malli löytyy sivulta 23 "table 5" [täältä](http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf) 
+
+Myös miesten kohdalla mallit erosivat merkittävästi AHS:n mallista. Huomioitavaa on kuitenkin se, että erot AHS:n mallin kanssa olivat pienemmät kuin naisten kohdalla. Miesten kohdalla etenkin RESIDM_JOB-muuttujan kohdalla oli eroavaisuuksia, omassa mallissani reisudaali tyytyväisyydestä työhön sai korrelaatiokertoimen 0.03 ja AHS:n mallissa puolestaan -0.21. AHS:n malli löytyy sivulta 24 "table 6",[täältä](http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf)
+
+
+----> tästä jatkuu! 
+
+##Malli 3
+####"Overall satisfaction regressed on capabilities and personality traits (model 3) – females"
+```{r, echo=FALSE}
 model3F <- lm(S_OALL ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS + RESIDF_DNOJOB + RESIDF_DNOPARTNR + RESIDF_HEALTH + RESIDF_HOUSE + RESIDF_H_INCOME + RESIDF_PARTNER + RESIDF_JOB + RESIDF_SOCIAL + RESIDF_LEISURE + RESIDF_QLEISURE, data = BHPS_naiset)
 summary(model3F)
 ```
 
-####Overall satisfaction regressed on capabilities and personality traits (model 3) – males
-```{r}
+####"Overall satisfaction regressed on capabilities and personality traits (model 3) – males"
+```{r, echo=FALSE}
 model3M <- lm(S_OALL ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS + RESIDM_DNOJOB + RESIDM_DNOPARTNR + RESIDM_HEALTH + RESIDM_HOUSE + RESIDM_H_INCOME + RESIDM_PARTNER + RESIDM_JOB + RESIDM_SOCIAL + RESIDM_LEISURE + RESIDM_QLEISURE, data = BHPS_miehet)
 summary(model3F)
 ```
+#### yhdenmukaisuus Anandin, Hunterin ja Smithin analyysiin
 
 #TULOKSET
+jotain tapahtui residuaalien kohdalla.. ja miksi naisten kesken oli suuremmat erot kuin miesten etenkin mallissa 2. Toisekseen, myös keskinäiset erot naisten ja miesten välillä oli samantyyliset vaikkakin arvot olivat eri AHS:n mallien kanssa. 
+Ei ole kauhean toistettavaa, ja Anand, Hunterin ja Smithin artikkeli ei ollut niin läpinäkyvä mitä olisi voinut olla, vaikka he olivatkin liittäneet analyysin loppuun muuttuja-luettelon, jossa kerrottiin, miten muuttujia oli uudelleenkoodattua ja -nimetty. Voi myös olla, että olen tehnyt jollain tapaa muuttujamuunnokset väärin tai eri tavoin mitä Anand, Hunter ja Smith. Kaiken kaikkiaan, tutkimuksen replikointi on mielenkiintoista ja haastavaa, vaikka käytössä olisikin täysin sama aineisto. Tutkijan rooli vaikuttaa olevan hyvin merkittävä tutkimuksen tulosten kannalta, joten sitä on ainakin entistä kriittisempi kvantitatiivista tutkimusta kohtaan tästedes. Hyvin tehtynä tilastollinen tutkimus voi olla erityisen arvokasta, mutta replikointia voitaisiin tehdä varmuuden vuoksi useamminkin. Tiedon toistettavuuden ja läpinäkyvyydem vuoksi.  
 
 #LÄHTEET
 Anand, P., Hunter, G., & Smith, R. (2005). Capabilities and Well-Being: Evidence Based on the Sen–Nussbaum Approach to Welfare. Social Indicators Research, 74(1), 9–55. https://doi.org/10.1007/s11205-005-6518-z

@@ -30,6 +30,8 @@ Koska Anand, Hunter ja Smith eivät maininneet, mitä he tekivät näille arvoil
 ###Muuttujalista
 Anand, Hunter ja Smith käyttivät analyysissaan seuraavia muuttujia (tummennetulla koodi, jonka vieressä lomakkeessa kysytty kysymys):
 
+####Toimintamahdollisuudet:
+
 * **S_HL_LIMIT** Does your health in any way limit your daily activities compared to most people of your age?
 * **S_HL_NOURISH** Here is a list of things which people might have or do. Please look at this card and tell me which things you (and your household) have or do? Eat meat, chicken, fish every second day) 
    * + Would you like to be able to eat meat, chicken, fish at least every second day, but must do without because you cannot afford it?
@@ -59,6 +61,9 @@ Anand, Hunter ja Smith käyttivät analyysissaan seuraavia muuttujia (tummennetu
 * **S_VOTE** Did you vote in this (past) year’s general election?
 * **S_HL_PWORK**;**S_HL_NAWORK** Does your health keep you from doing some types of work? ('Yes'; 'Can do nothing')
 * **S_HL_AWORKL**; **S_HLAWORKLTL**; **S_HLAWORKS**  For work you can do, how much does your health limit the amount of work you can do? ('A lot'; 'Just a little'; 'Somewhat')
+
+####Tyytyväisyys elämään kokonaisuutena ja osatyytyväisyydet:
+
 * **S_OALL** How dissatisfied or satisfied are you with your life overall?
 * **S_HEALTH** How dissatisfied or satisfied are you with your health?
 * **S_H_INCOME** How dissatisfied or satisfied are you with the income of your household?

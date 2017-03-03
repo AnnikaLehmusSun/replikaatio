@@ -9,7 +9,7 @@ output:
     fig_caption: true
     fig_width: 6
     fig_height: 4
-    
+    code_folding: hide
 ---
 #REPLIKOITAVA TUTKIMUS JA ANALYYSI
 Replikoitavaksi tutkimukseksi valitsin Paul Anandin, Graham Hunterin ja Ron Smithin aineistoanalyysin. Anand ja muut tarkastelivat toimintamahdollisuuksien ja elämään tyytyväisyyden yhteyksiä ja tulokset ovat esitetty artikkelissa "Capabilities and well-beingM evidence based on the Sen-Nussbaum approach to welfare". Artikkeli löytyy täältä: [Anand et al.](http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf) Tutkimuksessaan, Anand, Hunter ja Smith käyttävät lineaarista regressioanalyysia tutkiessaan erilaisten toimintamahdollisuuksien korrelaatiota elämään tyytyväisyyteen. Toimintamahdollisuus-tekijät he ovat operationalisoineet Martha Nussbaumin 10 toimintamahdollisuuden listasta. 

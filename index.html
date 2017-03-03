@@ -147,6 +147,8 @@ $(document).ready(function () {
 <li><a href="#malli-1">Malli 1</a></li>
 <li><a href="#residuaalit-malleihin-2-ja-3">Residuaalit malleihin 2 ja 3</a></li>
 <li><a href="#malli-2">Malli 2</a></li>
+</ul></li>
+<li><a href="#tasta-jatkuu">—-&gt; tästä jatkuu!</a><ul>
 <li><a href="#malli-3">Malli 3</a></li>
 </ul></li>
 <li><a href="#tulokset">TULOKSET</a></li>
@@ -166,7 +168,7 @@ $(document).ready(function () {
 <p>Muuttujamuunnokset, jotka ovat tehty replikoitavan analyysin pohjalta ja mukaisesti löytyvät täältä: <a href="https://github.com/AnnikaLehmusSun/replikaatio/blob/master/data/muuttujamuunnokset.R">muuttujamuunnokset replikaatiota varten</a></p>
 <div id="puuttuvat-tiedot" class="section level4">
 <h4>Puuttuvat tiedot</h4>
-<p>Anand, Hunter ja Smith eivät maininneet artikkelissaan, mitä he tekivät niin kutsutuille puuttuville tiedoilla. Puuttuvat tiedot BHPS-aineistossa olivat koodattu seuraavanlaisesti: Value = -9 Label = Missing or wild Value = -8 Label = Inapplicable Value = -7 Label = Proxy and or phone Value = -2 Label = Refused Value = -1 Label = Not answered</p>
+<p>Anand, Hunter ja Smith eivät maininneet artikkelissaan, mitä he tekivät niin kutsutuille puuttuville tiedoilla. Puuttuvat tiedot BHPS-aineistossa olivat koodattu seuraavanlaisesti: -9 = Missing or wild; -8 = Inapplicable; -7 = Proxy and or phone; -2 = Refused ja -1 = Not answered.</p>
 <p>Koska Anand, Hunter ja Smith eivät maininneet, mitä he tekivät näille arvoille (-1 - (-7)) analyysissaan, heikentää se luonnollisesti tutkimuksen toistettavuutta. Oletan, että puuttuvat arvot ovat merkitty NA, eli non available - muotoon, joten uudelleen koodasin arvot -1 -(-7) muotoon NA.</p>
 </div>
 </div>
@@ -314,8 +316,8 @@ summary(model1M)</code></pre>
 <div id="residuaalit-malleihin-2-ja-3" class="section level2">
 <h2>Residuaalit malleihin 2 ja 3</h2>
 <p>Malleissa 2 ja 3 Anand, Hunter ja Smith ovat lisänneet personallisuuteen (personality traits) liittyvät tekijät, eli katsoneet millä tavoin eri tekijät korreloivat keskenään, ja lisänneet näistä residuaali-muuttujat malleihin 2 ja 3. He tekivät siis 10 regressioanalyysia, joissa vuorollaan aina yksi tyytyväisyyden osatekijä (kuten tyytyväisyys työhön) on selittäjänä ja selitettävänä toimintamahdollisuus-muuttujat, erikseen miehille ja naisille. Näistä regressiomalleista, he ovat tallentaneet residuaalit aineistoonsa ja käyttäneet niitä sitten alkuperäisten muuttujien sijasta. Tällä tavoin on ilmeisesti yritetty karsia persoonallisuuden osuus pois. Alla on siis koodit ensin regressiomalleihin ja sitten residuaalien tallentamiseen. Mainittakoon, että tämä kohta analyysista ei ollut kaikista selkein sisällöltään, muttei myöskään ilmaistuna Anandin, Hunterin ja Smithin analyysissa.</p>
-<div id="regressiomallit-osa-aluetyytyvaisyydet-selittajana-naiset-koodi" class="section level3">
-<h3>Regressiomallit osa-aluetyytyväisyydet selittäjänä, naiset (koodi)</h3>
+<div id="regressiomallit-osatyytyvaisyydet-selittajana-naiset-koodi" class="section level3">
+<h3>Regressiomallit osatyytyväisyydet selittäjänä, naiset (koodi)</h3>
 <pre class="r"><code>model1F_DNOJOB &lt;- lm(D_NOJOB ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_naiset)
 
 model1F_DNOPARTNER &lt;- lm(D_NOPARTNER ~  S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_naiset)
@@ -338,8 +340,8 @@ model1F_LEISURE &lt;- lm(S_LEISURE  ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +
 
 model1F_QLEISURE &lt;- lm(S_QLEISURE ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_naiset)</code></pre>
 </div>
-<div id="regressiomallit-osa-aluetyytyvaisyydet-selittajana-miehet-koodi" class="section level3">
-<h3>Regressiomallit osa-aluetyytyväisyydet selittäjänä, miehet (koodi)</h3>
+<div id="regressiomallit-osatyytyvaisyydet-selittajana-miehet-koodi" class="section level3">
+<h3>Regressiomallit osatyytyväisyydet selittäjänä, miehet (koodi)</h3>
 <pre class="r"><code>model1M_DNOJOB &lt;- lm(D_NOJOB ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_miehet)
 
 model1M_DNOPARTNER &lt;- lm(D_NOPARTNER ~  S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_miehet)
@@ -393,6 +395,8 @@ BHPS_miehet &lt;-add_residuals(data=BHPS_miehet, model=model1M_QLEISURE, var=&qu
 <h2>Malli 2</h2>
 <div id="tyytyvaisyys-elamaan-kokonaisuutena-ja-osatyytyvaiset-residuaaleina-regressiomalleista-naiset" class="section level3">
 <h3>Tyytyväisyys elämään kokonaisuutena ja osatyytyväiset residuaaleina regressiomalleista, naiset</h3>
+<pre class="r"><code>model2F &lt;- lm(S_OALL ~ D_NOJOB + D_NOPARTNER + S_HEALTH + S_HOUSE + S_H_INCOME + S_PARTNER2 + S_JOB2 + S_SOCIAL + S_LEISURE + S_QLEISURE + RESIDF_DNOJOB + RESIDF_DNOPARTNR + RESIDF_HEALTH + RESIDF_HOUSE + RESIDF_H_INCOME + RESIDF_PARTNER + RESIDF_JOB + RESIDF_SOCIAL + RESIDF_LEISURE + RESIDF_QLEISURE, data = BHPS_naiset)
+summary(model2F)</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = S_OALL ~ D_NOJOB + D_NOPARTNER + S_HEALTH + S_HOUSE + 
@@ -438,6 +442,8 @@ BHPS_miehet &lt;-add_residuals(data=BHPS_miehet, model=model1M_QLEISURE, var=&qu
 </div>
 <div id="tyytyvaisyys-elamaan-kokonaisuutena-ja-osatyytyvaiset-residuaaleina-regressiomalleista-miehet" class="section level3">
 <h3>Tyytyväisyys elämään kokonaisuutena ja osatyytyväiset residuaaleina regressiomalleista, miehet</h3>
+<pre class="r"><code>model2M &lt;- lm(S_OALL  ~ D_NOJOB + D_NOPARTNER + S_HEALTH + S_HOUSE + S_H_INCOME + S_PARTNER2 + S_JOB2 + S_SOCIAL + S_LEISURE + S_QLEISURE + RESIDM_DNOJOB + RESIDM_DNOPARTNR + RESIDM_HEALTH + RESIDM_HOUSE + RESIDM_H_INCOME + RESIDM_PARTNER + RESIDM_JOB + RESIDM_SOCIAL + RESIDM_LEISURE + RESIDM_QLEISURE, data = BHPS_miehet)
+summary(model2M)</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = S_OALL ~ D_NOJOB + D_NOPARTNER + S_HEALTH + S_HOUSE + 
@@ -486,13 +492,17 @@ BHPS_miehet &lt;-add_residuals(data=BHPS_miehet, model=model1M_QLEISURE, var=&qu
 <p>Toisin kuin ensimmäisessä mallissa, malli 2 eroaa huomattavasti AHS:n toisesta mallista. Mielenkiintoinen huomio on, että naisten ja miesten väliset erot arvoissa ovat samanlaiset omien mallien välillä mitä AHS:n mallien välillä. Siitä huolimatta, että erot naisten ja miesten välillä tuntuu olevan samankaltaiset, itse arvot eroavat suuresti.</p>
 <p>Naisten kohdalla selkeimmät erot tulivat työn ja partneri -muuttujien kohdalla. Etenkin D_NOJOB, D_NOPARTNER, S_PARTNER2 ja RESIDF_DNOPARTNR - kohdissa erot olivat erityisen merkittävät. Esimerkiksi tyytyväisyyttä puolisoon mittaava S_PARTNER2 sai omassa mallissani estimaatin 0.47 ja AHS:n mallissa 1,07. Vielä suurempi ero oli D_NOPARTNER-muuttujan kohdalla, joka siis indikoi, ettei vastaajalla ole parisuhdetta, sai omassa mallissani arvon 2,89 ja AHS:n mallissa 6.48. AHS:n malli löytyy sivulta 23 “table 5” <a href="http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf">täältä</a></p>
 <p>Myös miesten kohdalla mallit erosivat merkittävästi AHS:n mallista. Huomioitavaa on kuitenkin se, että erot AHS:n mallin kanssa olivat pienemmät kuin naisten kohdalla. Miesten kohdalla etenkin RESIDM_JOB-muuttujan kohdalla oli eroavaisuuksia, omassa mallissani reisudaali tyytyväisyydestä työhön sai korrelaatiokertoimen 0.03 ja AHS:n mallissa puolestaan -0.21. AHS:n malli löytyy sivulta 24 “table 6”,<a href="http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf">täältä</a></p>
-<p>—-&gt; tästä jatkuu!</p>
 </div>
 </div>
+</div>
+<div id="tasta-jatkuu" class="section level1">
+<h1>—-&gt; tästä jatkuu!</h1>
 <div id="malli-3" class="section level2">
 <h2>Malli 3</h2>
 <div id="overall-satisfaction-regressed-on-capabilities-and-personality-traits-model-3-females" class="section level4">
 <h4>“Overall satisfaction regressed on capabilities and personality traits (model 3) – females”</h4>
+<pre class="r"><code>model3F &lt;- lm(S_OALL ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS + RESIDF_DNOJOB + RESIDF_DNOPARTNR + RESIDF_HEALTH + RESIDF_HOUSE + RESIDF_H_INCOME + RESIDF_PARTNER + RESIDF_JOB + RESIDF_SOCIAL + RESIDF_LEISURE + RESIDF_QLEISURE, data = BHPS_naiset)
+summary(model3F)</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = S_OALL ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE + 
@@ -586,6 +596,8 @@ BHPS_miehet &lt;-add_residuals(data=BHPS_miehet, model=model1M_QLEISURE, var=&qu
 </div>
 <div id="overall-satisfaction-regressed-on-capabilities-and-personality-traits-model-3-males" class="section level4">
 <h4>“Overall satisfaction regressed on capabilities and personality traits (model 3) – males”</h4>
+<pre class="r"><code>model3M &lt;- lm(S_OALL ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS + RESIDM_DNOJOB + RESIDM_DNOPARTNR + RESIDM_HEALTH + RESIDM_HOUSE + RESIDM_H_INCOME + RESIDM_PARTNER + RESIDM_JOB + RESIDM_SOCIAL + RESIDM_LEISURE + RESIDM_QLEISURE, data = BHPS_miehet)
+summary(model3F)</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = S_OALL ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE + 
@@ -678,7 +690,7 @@ BHPS_miehet &lt;-add_residuals(data=BHPS_miehet, model=model1M_QLEISURE, var=&qu
 ## F-statistic: 21.28 on 59 and 624 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div id="yhdenmukaisuus-anandin-hunterin-ja-smithin-analyysiin-2" class="section level4">
-<h4>yhdenmukaisuus Anandin, Hunterin ja Smithin analyysiin</h4>
+<h4>Yhdenmukaisuus Anandin, Hunterin ja Smithin analyysiin</h4>
 </div>
 </div>
 </div>

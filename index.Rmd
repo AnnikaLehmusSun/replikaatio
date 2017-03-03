@@ -4,15 +4,29 @@ author: "Annika Lehmus-Sun"
 output: html_document
 ---
 #REPLIKOITAVA TUTKIMUS JA ANALYYSI
-Tutkimus: anand et al. toimintamahdollisuuksien teoria, alkuperäinen julkaistu artikkeli analyysista löytyy täältä: [Anand et al.](http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf)
+Replikoitavaksi tutkimukseksi valitsin Paul Anandin, Graham Hunterin ja Ron Smithin aineistoanalyysin. Anand ja muut tarkastelivat toimintamahdollisuuksien ja elämään tyytyväisyyden yhteyksiä ja tulokset ovat esitetty artikkelissa "Capabilities and well-beingM evidence based on the Sen-Nussbaum approach to welfare". Artikkeli löytyy täältä: [Anand et al.](http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf) Tutkimuksessaan, Anand, Hunter ja Smith käyttävät lineaarista regressioanalyysia tutkiessaan erilaisten toimintamahdollisuuksien korrelaatiota elämään tyytyväisyyteen. Toimintamahdollisuus-tekijät he ovat operationalisoineet Martha Nussbaumin 10 toimintamahdollisuuden listasta. 
 
-#AINEISTO JA MUUTTUJAT
-to use data for the analysis from the British Household Panel Survey (BHPS), an annual survey of each adult (16+) member of a nationally representative sample of more than 5000 households, comprising a total of approxi- mately 10 000 individual interviews. The survey presents a major collaboration between statisticians and social scientists, is constantly revised and can reasonably be taken as reflecting good practice in terms of questionnaire design. The main method of data collection at each wave is by face-to-home in-home interviewing and this paper draws on data from the 10th wave of interviews carried out in the year 2000.
+##Aineisto ja muuttuja
+Aineistona on täysin sama kuin Anandin, Hunterin ja Smithin analyysissakin, eli British Household Panel Survey [BHPS] ja siitä vuoden 2000 otanta eli kymmennes vuosi koko paneelitutkimuksesta. BHPS pitää sisällään tietoa yli 16-vuotiaiden elämäntavoista, hyvinvoinnista ja yleisesti hyvin kattavasti elämän eri osa-alueista. BHPS on kerätty pitkälti kotona tehtyinä haastatteluilla Lisätietoa vuoden 2000 aineistosta löydät täältä: [BHPS 2000](https://www.iser.essex.ac.uk/bhps/documentation/pdf_versions/index.html) ja yleisesti BHPS:stä täältä: [British household panel survey](https://www.iser.essex.ac.uk/bhps)
 
-British household panel Survey [BHPS] vuosi 2000. Lisätietoa aineistosta löydät täältä: [BHPS 2000](https://www.iser.essex.ac.uk/bhps/documentation/pdf_versions/index.html) ja yleistä BHPS:stä: [British household panel survey](https://www.iser.essex.ac.uk/bhps)
-Anand. et al. käyttivät analyysissaan seuraavia muuttujia: 
+Koska Anandin ja muiden analyysissa miehiä ja naisia on tarkasteltu erikseen, jaoin BHPS 2000 aineiston miesten ja naisten aineistoiksi. Vastaajista naisia oli yhteensä 8 426 ja miehiä 7 177. Miehiä oli siis reilu tuhat vähemmän tässä otannassa. 
 
-###Muuttujalista: 
+###Muuttujamuutokset
+Muuttujamuunnokset, jotka ovat tehty replikoitavan analyysin pohjalta ja mukaisesti löytyvät täältä: [muuttujamuunnokset replikaatiota varten](https://github.com/AnnikaLehmusSun/replikaatio/blob/master/data/muuttujamuunnokset.R)
+
+####Puuttuvat tiedot
+Anand, Hunter ja Smith eivät maininneet artikkelissaan, mitä he tekivät niin kutsutuille puuttuville tiedoilla. Puuttuvat tiedot BHPS-aineistossa olivat koodattu seuraavanlaisesti: 
+Value = -9	Label = Missing or wild
+Value = -8	Label = Inapplicable
+Value = -7	Label = Proxy and or phone
+Value = -2	Label = Refused
+Value = -1	Label = Not answered
+
+Koska Anand ja muut eivät maininneet, mitä he tekivät näille arvoille (-1 - (-7)) analyysissaan, heikentää se luonnollisesti tutkimuksen toistettavuutta. Oletan, että puuttuvat arvot ovat merkitty NA, eli non available - muotoon, joten uudelleen koodasin arvot -1 -(-7) muotoon NA. 
+
+###Muuttujalista
+Anand, Hunter ja Smith käyttivät analyysissaan seuraavia muuttujia (tummennetulla koodi, jonka vieressä lomakkeessa kysytty kysymys):
+
 1. **S_HL_LIMIT** Does your health in any way limit your daily activities compared to most people of your age?
 2. **S_HL_NOURISH** Here is a list of things which people might have or do. Please look at this card and tell me which things you (and your household) have or do? Eat meat, chicken, fish every second day) 
  + 2a.  Would you like to be able to eat meat, chicken, fish at least every second day, but must do without because you cannot afford it?
@@ -47,28 +61,13 @@ Anand. et al. käyttivät analyysissaan seuraavia muuttujia:
 28. **S_H_INCOME** How dissatisfied or satisfied are you with the income of your household?
 29. **S_HOUSE** How dissatisfied or satisfied are you with your house/flat?
 30. **S_PARTNER2** How dissatisfied or satisfied are you with your husband/ wife/partner?
+  **D_NOPARTNER** S_partner - does not apply
 31. **S_JOB2** How dissatisfied or satisfied are you with your job?
+  **D_NOJOB** S_job2 - does not apply
 32. **S_SOCIAL** How dissatisfied or satisfied are you with your social life?
 33. **S_QLEISURE** How dissatisfied or satisfied are you with the amount of leisure time you have?
 34. **S_LEISURE** How dissatisfied or satisfied are you with the way you spend your leisure?
 
-Taustamuuttujat (ks. kohta puuttuvat tiedot)
-**C** gender
-**D_NOPARTNER** S_partner - does not apply
-**D_NOJOB** S_job2 - does not apply
-
-
-###Muuttujamuutokset
-Muuttujamuunnokset, jotka ovat tehty Anand et. al.:in analyysin pohjalta ja mukaisesti löytyvät täältä: [muuttujamuunnokset](https://github.com/AnnikaLehmusSun/replikaatio/blob/master/data/muuttujamuunnokset.R)
-
---> kaikkia muuttujia ei ole selitetty, ja koodattu vaikeasti, sekottaa?
-
-####Puuttuvat tiedot
-tämähän kannattaa nyt kirjata raporttiin – tutkimusta ei voi täysin varmasti toistaa, kun ei ole kerrottu mitä puuttuville
-tiedoille on tehty, ja päättää itse miten etenet –eli varmaan tuo NA on loogisin oletus.
-
-Anand et al. käyttivät taustamuuttujina uudelleennimeämiään muuttujia: D_NOJOB, D_NOPARTNER ja C. He eivät kuitenkaan missään kohdin kertoneet tarkemmin, mistä BHPS muuttujista näissä on kyse. Tässäkin kohdassa joutui hieman ollettamaan ja tekemään itsenäisiä päätöksiä. Oletin siis, että BHPS muuttujista JSEX = C; JMASTAT (marital status) arvot > 3 = D_NOPARTNER; ja JJBSTATT (employment status on Sept. 1 this year [2000]) arvot > 2 = D_NOJOB. 
-etenkin parisuhdetta ja työtä käsitteleviä kysymyksiä oli useampi, joten ei ole varmuutta siitä, mitä muuttujia Anand et al. näissä kohdin käyttivät, mikä heikentää niin ikään tutkimuksen toistettavuutta. 
 
 #REPLIKAATIO
 ```{r}
@@ -174,7 +173,6 @@ model1M_QLEISURE <- lm(S_QLEISURE ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_
 summary(model1M_QLEISURE)
 ```
 
-    
 ### tallennetaan residuaalit omiksi tiedostoiksi
 ```{r}
 #naiset ensin
@@ -206,7 +204,7 @@ BHPS_miehet <-add_residuals(data=BHPS_miehet, model=model1M_QLEISURE, var="RESID
 
 ```
 
-##Malli 2 PROBLEM WITH NOJOB AND NOPARTNER -VARIABLES
+##Malli 2
 Mallissa 2 Anand et al. ovat lisänneet metodilla (x?) personallisuuteen liittyvät tekijät, eli katsoneet millä tavoin eri tekijät korreloivat keskenään, ja lisänneet ne malleihin 2 ja 4. Tässä työssä päätin kuitenkin keskittyä vain malliin 1 ja 3, jotka ovat  tehty ilman personaan vaikutusta, sillä näidenkin analyysien toistaminen on tarpeeksi uskoakseni! Anand et al. jättivät myös itse mallin 4 ulkopuolelle, pitkälti tilan puutteen vuoksi tosin. 
 
 
@@ -217,7 +215,7 @@ summary(model2F)
 
 ```
 
-###Overall satisfaction regressed on elements of satisfaction and personality traits (model 2) – males
+####Overall satisfaction regressed on elements of satisfaction and personality traits (model 2) – males
 
 ```{r}
 model2M <- lm(S_OALL  ~ D_NOJOB + D_NOPARTNER + S_HEALTH + S_HOUSE + S_H_INCOME + S_PARTNER2 + S_JOB2 + S_SOCIAL + S_LEISURE + S_QLEISURE + RESIDM_DNOJOB + RESIDM_DNOPARTNR + RESIDM_HEALTH + RESIDM_HOUSE + RESIDM_H_INCOME + RESIDM_PARTNER + RESIDM_JOB + RESIDM_SOCIAL + RESIDM_LEISURE + RESIDM_QLEISURE, data = BHPS_miehet)
@@ -226,14 +224,14 @@ summary(model2M)
 
 
 ##Malli 3
-Overall satisfaction regressed on capabilities and personality traits (model 3) – females
+####Overall satisfaction regressed on capabilities and personality traits (model 3) – females
 
 ```{r}
 model3F <- lm(S_OALL ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS + RESIDF_DNOJOB + RESIDF_DNOPARTNR + RESIDF_HEALTH + RESIDF_HOUSE + RESIDF_H_INCOME + RESIDF_PARTNER + RESIDF_JOB + RESIDF_SOCIAL + RESIDF_LEISURE + RESIDF_QLEISURE, data = BHPS_naiset)
 summary(model3F)
 ```
 
-Overall satisfaction regressed on capabilities and personality traits (model 3) – males
+####Overall satisfaction regressed on capabilities and personality traits (model 3) – males
 ```{r}
 model3M <- lm(S_OALL ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS + RESIDM_DNOJOB + RESIDM_DNOPARTNR + RESIDM_HEALTH + RESIDM_HOUSE + RESIDM_H_INCOME + RESIDM_PARTNER + RESIDM_JOB + RESIDM_SOCIAL + RESIDM_LEISURE + RESIDM_QLEISURE, data = BHPS_miehet)
 summary(model3F)
@@ -245,10 +243,6 @@ summary(model3F)
 Anand, P., Hunter, G., & Smith, R. (2005). Capabilities and Well-Being: Evidence Based on the Sen–Nussbaum Approach to Welfare. Social Indicators Research, 74(1), 9–55. https://doi.org/10.1007/s11205-005-6518-z
 
 British Household Panel Survey, wave 10, Economic and Social Research Council Research Centre on Micro-Social Change, Essex: UK Data Archive (distributor)
-
-#Just in case
-#capabilities: 
-S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE + S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS
 
 
 

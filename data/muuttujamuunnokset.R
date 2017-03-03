@@ -11,7 +11,7 @@ jhhresp <- read_sav("/Applications/replikaatio/data/jhhresp.sav")
 BHPS2000 <- merge(jindresp, jhhresp, by="JHID")
 
 # Vain niiden muuttujien valitseminen aineistosta BHPS2000, joita Anand et al. käyttivät analyysissaan, ja BHPS_data - aineiston luominen. 
-keep_columns <- c("JHLLT","JHSCANE","JHSCNTE","JLKMOVE", "JCARUSE", "JHSPRBQ","JQFEDHI","JGHQA","JGHQB", "JGHQE", "JGHQI", "JGHQJ", 
+keep_columns <- c("JSEX", "JMASTAT","JJBSTATT","JHLLT","JHSCANE","JHSCNTE","JLKMOVE", "JCARUSE", "JHSPRBQ","JQFEDHI","JGHQA","JGHQB", "JGHQE", "JGHQI", "JGHQJ", 
                   "JGHQD","JGHQF", "JGHQH", "JHSCANB", "JXPMOVE", "JHSCNTB", "JHSCAND", "JHSCNTD","JHSCANF","JHSCNTF","JGHQK", "JGHQC", 
                   "JGHQL", "JGHQG", "JVOTE7", "JHLENDW", "JHLLTWA", "JLFSATO", "JLFSAT1", "JLFSAT2", "JLFSAT3", "JLFSAT4", "JLFSAT5", 
                   "JLFSAT6", "JLFSAT7", "JLFSAT8")
@@ -21,6 +21,11 @@ describe(BHPS_data)
 #Muuttujien uudelleen nimeäminen ja koodaaminen Anand et. al.:in analyysin pohjalta
 #Anand et al. eivät maininneet, mitä he tekivät puuttuville arvoille (-1 - (-7)) analyysissaan, mikä luonnollisesti heikentää tutkimuksen toistettavuutta.
 #Oletan, että puuttuvat arvot ovat merkitty NA, eli non available - muotoon, joten uudelleen koodaan -1 -(-7) muotoon NA 
+
+#TAUSTAMUUTTUJAT: gender
+BHPS_data$gender <- BHPS_data$JSEX
+BHPS_data$gender[BHPS_data$gender < 0] <-NA
+BHPS_data$gender
 
 #TERVEYS: Being able to have good health – variable S_HL_LIMIT BHPS variable (JHLLT) and question –
 #‘‘Does your health in any way limit your daily activities compared to most people of your age?’’ Yes coded as one. No coded as 0.
@@ -69,72 +74,73 @@ BHPS_data$S_H_CRIME[BHPS_data$S_H_CRIME == 2] <- 1
 #is a derived variable giving the highest educational qualification. Those coded ‘A’ level and above are coded as one. The remainder are coded as 0.
 BHPS_data$S_S_EDUCATE <- BHPS_data$JQFEDHI
 BHPS_data$S_S_EDUCATE[BHPS_data$S_S_EDUCATE< 0] <- NA
-BHPS_data$S_S_EDUCATE[BHPS_data$S_S_EDUCATE > 5] <- 1
 BHPS_data$S_S_EDUCATE[BHPS_data$S_S_EDUCATE < 6] <- 0
+BHPS_data$S_S_EDUCATE[BHPS_data$S_S_EDUCATE > 5] <- 1
 
 #BHPS variable (JGHQA) and question‘‘Have you recently. . . been able to concentrate on whatever you’re doing?’’
 #S_W_CONCB has value one for those answering ‘Better than usual’, 
 #S_W_CONCL for those answering ‘Less than usual’ and 
 #S_W_CONCML for those answering ‘Much less than usual’. The base is those answering ‘Same as usual’.
-BHPS_data$S_W_CONCB <- BHPS_data$JGHQA[1]
-BHPS_data$S_W_CONCL <- BHPS_data$JGHQA[3]
-BHPS_data$S_W_CONCML <- BHPS_data$JGHQA[4]
+BHPS_data$JGHQA[BHPS_data$JGHQA < 0] <- NA
+BHPS_data$S_W_CONCB <- as.numeric(BHPS_data$JGHQA == 1)
+BHPS_data$S_W_CONCL <- as.numeric(BHPS_data$JGHQA == 3)
+BHPS_data$S_W_CONCML <- as.numeric(BHPS_data$JGHQA == 4)
 
 #BHPS variable (JGHQB) and question ‘‘Have you recently. . .. lost much sleep over worry?’’ 
 #S_W_SLEEPN has value one for those answering ‘Not at all’, 
 #S_W_SLEEPM for those answering ‘Rather more than usual’, and 
 #S_W_SLEEPMM for those answering ‘Much more than usual’. The base is those answering ‘No more than usual’.
-BHPS_data$S_W_SLEEPN <- BHPS_data$JGHQB[1]
-BHPS_data$S_W_SLEEPM <- BHPS_data$JGHQB[3]
-BHPS_data$S_W_SLEEPMM <- BHPS_data$JGHQB[4]
+BHPS_data$S_W_SLEEPN <- as.numeric(BHPS_data$JGHQB == 1)
+BHPS_data$S_W_SLEEPM <- as.numeric(BHPS_data$JGHQB == 3)
+BHPS_data$S_W_SLEEPMM <- as.numeric(BHPS_data$JGHQB == 4)
 
 #BHPS variable (JGHQE) and question ‘‘Have you recently. . .. felt constantly under strain?’’ 
 #S_W_STRAINN has value one for those answering ‘Not at all’, 
 #S_W_STRAINM for those answering ‘Rather more than usual’, and 
 #S_W_STRAINMM for those answering ‘Much More than usual’. The base is those answering ‘No more than usual’.
-BHPS_data$S_W_STRAINN <- BHPS_data$JGHQE[1]
-BHPS_data$S_W_STRAINM <- BHPS_data$JGHQE[3]
-BHPS_data$S_W_STRAINMM <- BHPS_data$JGHQE[4]
+BHPS_data$S_W_STRAINN <- as.numeric(BHPS_data$JGHQE == 1)
+BHPS_data$S_W_STRAINM <- as.numeric(BHPS_data$JGHQE == 3)
+BHPS_data$S_W_STRAINMM <- as.numeric(BHPS_data$JGHQE == 4)
 
 #BHPS variable (JGHQI) and question ‘‘Have you recently. . . been feeling unhappy or depressed?’’ 
 #S_W_DEPRESSN has value one for those answering ‘Not at all’, 
 #S_W_DEPRESSM for those answering ‘Rather more than usual’, and 
 #S_W_DEPRESSMM for those answering ‘Much more than usual’. The base is those answering ‘No more than usual’
-BHPS_data$S_W_DEPRESSN <- BHPS_data$JGHQI[1]
-BHPS_data$S_W_DEPRESSM <- BHPS_data$JGHQI[3]
-BHPS_data$S_W_DEPRESSMM <- BHPS_data$JGHQI[4]
+BHPS_data$S_W_DEPRESSN <- as.numeric(BHPS_data$JGHQI == 1)
+BHPS_data$S_W_DEPRESSM <- as.numeric(BHPS_data$JGHQI == 3)
+BHPS_data$S_W_DEPRESSMM <- as.numeric(BHPS_data$JGHQI == 4)
 
 #BHPS variable (JGHQJ) and question ‘‘Have you recently. . .been losing confidence in yourself?’’ 
 #S_W_CONFIDENTN has value one for those answering ‘Not at all’, 
 #S_W_CONFIDENTM for those answering ‘Rather more than usual’, and 
 #S_W_CONFIDENTMM for those answering ‘Much more than usual’. The base is those answering ‘No more than usual’
-BHPS_data$S_W_CONFIDENTN <- BHPS_data$JGHQJ[1]
-BHPS_data$S_W_CONFIDENTM <- BHPS_data$JGHQJ[3]
-BHPS_data$S_W_CONFIDENTMM <- BHPS_data$JGHQJ[4]
+BHPS_data$S_W_CONFIDENTN <- as.numeric(BHPS_data$JGHQJ == 1)
+BHPS_data$S_W_CONFIDENTM <- as.numeric(BHPS_data$JGHQJ == 3)
+BHPS_data$S_W_CONFIDENTMM <- as.numeric(BHPS_data$JGHQJ == 4)
 
 #BHPS variable (JGHQD) and question ‘‘Have you recently. . . felt capable of making decisions about things?’’
 #S_W_DECIDEM has a value one for those answering ‘More so than usual’, 
 #S_W_DECIDEL for those answering ‘Less so than usual’ and 
 #S_W_DECIDEML for those answering ‘Much less capable than usual’. The base is those answering ‘Same as usual’
-BHPS_data$S_W_DECIDEM <- BHPS_data$JGHQD[1]
-BHPS_data$S_W_DECIDEL <- BHPS_data$JGHQD[3]
-BHPS_data$S_W_DECIDEML <- BHPS_data$JGHQD[4]
+BHPS_data$S_W_DECIDEM <- as.numeric(BHPS_data$JGHQD == 1)
+BHPS_data$S_W_DECIDEL <- as.numeric(BHPS_data$JGHQD == 3)
+BHPS_data$S_W_DECIDEML <- as.numeric(BHPS_data$JGHQD == 4)
 
 #BHPS variable (JGHQF) and question ‘‘Have you recently... felt you couldn’t overcome your difficulties?’’ 
 #S_W_DIFICULTN has a value one for those answering ‘Not at all’, 
 #S_W_DIFICULTM for those answering ‘Rather more than usual’ and 
 #S_W_DIFICULTMM for those answering ‘Much more than usual’. The base is those answering ‘No more than usual’
-BHPS_data$S_W_DIFICULTN <- BHPS_data$JGHQF[1]
-BHPS_data$S_W_DIFICULTM <- BHPS_data$JGHQF[3]
-BHPS_data$S_W_DIFICULTMM <- BHPS_data$JGHQF[4]
+BHPS_data$S_W_DIFICULTN <- as.numeric(BHPS_data$JGHQF == 1)
+BHPS_data$S_W_DIFICULTM <- as.numeric(BHPS_data$JGHQF == 3)
+BHPS_data$S_W_DIFICULTMM <- as.numeric(BHPS_data$JGHQF == 4)
 
 #BHPS variable (JGHQH) and question ‘‘Have you recently. . . been able to face up to problems?’’ 
 #S_W_FACEUPM has a value one for those answering ‘More so than usual’, 
 #S_W_FACEUPL for those answering ‘Less so than usual’ and 
 #S_W_FACEUPMML for those answering ‘Much less than usual’. The base is those answering ‘Same as usual’
-BHPS_data$S_W_FACEUPM <- BHPS_data$JGHQH[1]
-BHPS_data$S_W_FACEUPL <- BHPS_data$JGHQH[3]
-BHPS_data$S_W_FACEUPMML <- BHPS_data$JGHQH[4]
+BHPS_data$S_W_FACEUPM <- as.numeric(BHPS_data$JGHQH == 1)
+BHPS_data$S_W_FACEUPL <- as.numeric(BHPS_data$JGHQH == 3)
+BHPS_data$S_W_FACEUPMML <- as.numeric(BHPS_data$JGHQH == 4)
 
 #BHPS variable (JHSCANB) and question – ‘‘Here is a list of things which people might have or do. Please look at this card and tell me which things 
 #you (and your household) have or do? Pay for a week’s annual holiday away from home.’’ S_S_HOLIDAY is coded as one for those answering yes. 
@@ -174,33 +180,33 @@ BHPS_data$S_S_MEAL[BHPS_data$S_S_MEAL == 2 & BHPS_data$JHSCNTF == 2] <- 1
 #S_W_WORTHN has a value one for those answering ‘Not at all’, 
 #S_W_WORTHM for those answering ‘Rather more than usual’, 
 #S_W_WORTHMM for those answering ‘Much more than usual’. The base is those answering ‘No more than usual’
-BHPS_data$S_W_WORTHN <- BHPS_data$JGHQK[1]
-BHPS_data$S_W_WORTHM <- BHPS_data$JGHQK[3]
-BHPS_data$S_W_WORTHMM <- BHPS_data$JGHQK[4]
+BHPS_data$S_W_WORTHN <- as.numeric(BHPS_data$JGHQK == 1)
+BHPS_data$S_W_WORTHM <- as.numeric(BHPS_data$JGHQK == 3)
+BHPS_data$S_W_WORTHMM <- as.numeric(BHPS_data$JGHQK == 4)
 
 #KORVAAMATTOMUUS. BHPS variable (JGHQC) and question –‘‘Have you recently... felt that you were playing a useful part in things?’’
 #S_W_ROLEM has a value one for those answering ‘More than usual’, 
 #S_W_ROLEL for those answering ‘Less so than usual’ and 
 #S_W_ROLEML for those answering ‘Much less than usual’. The base is those answering ‘Same as usual’
-BHPS_data$S_W_ROLEM <- BHPS_data$JGHQC[1]
-BHPS_data$S_W_ROLEL <- BHPS_data$JGHQC[3]
-BHPS_data$S_W_ROLEML <- BHPS_data$JGHQC[4]
+BHPS_data$S_W_ROLEM <- as.numeric(BHPS_data$JGHQC == 1)
+BHPS_data$S_W_ROLEL <- as.numeric(BHPS_data$JGHQC == 3)
+BHPS_data$S_W_ROLEML <- as.numeric(BHPS_data$JGHQC == 4)
 
 #ONNELLISUUS BHPS variable (JGHQL) and question –‘‘Have you recently.... been feeling reasonably happy, all things considered??’’
 #S_W_HAPPYM has a value one for those answering ‘More so than usual’, 
 #S_W_HAPPYL for those answering ‘Less so than usual’ and 
 #S_W_HAPPYML for those answering ‘Much less than usual’. The base is those answering ‘Same as usual’
-BHPS_data$S_W_HAPPYM <- BHPS_data$JGHQL[1]
-BHPS_data$S_W_HAPPYL <- BHPS_data$JGHQL[3]
-BHPS_data$S_W_HAPPYML <- BHPS_data$JGHQL[4]
+BHPS_data$S_W_HAPPYM <- as.numeric(BHPS_data$JGHQL == 1)
+BHPS_data$S_W_HAPPYL <- as.numeric(BHPS_data$JGHQL == 3)
+BHPS_data$S_W_HAPPYML <- as.numeric(BHPS_data$JGHQL == 4)
 
 #ELÄMÄSTÄ NAUTTIMINEN. BHPS variable (JGHQG) and question – ‘‘Have you recently. . . been able to enjoy your normal day- to-day activities?’’
 #S_W_EACTIVEM has a value one for those answering ‘More so than usual’, 
 #S_W_EACTIVEL for those answering ‘Less so than usual’ and
 #S_W_EACTIVEML for those answering ‘Much less than usual’. The base is those answering ‘Same as usual’.
-BHPS_data$S_W_EACTIVEM <- BHPS_data$JGHQG[1]
-BHPS_data$S_W_EACTIVEL <- BHPS_data$JGHQG[3]
-BHPS_data$S_W_EACTIVEML <- BHPS_data$JGHQG[4]
+BHPS_data$S_W_EACTIVEM <- as.numeric(BHPS_data$JGHQG == 1)
+BHPS_data$S_W_EACTIVEL <- as.numeric(BHPS_data$JGHQG == 3)
+BHPS_data$S_W_EACTIVEML <- as.numeric(BHPS_data$JGHQG == 4)
 
 #ÄÄNESTÄMINEN.Being able to participate effectively in political choices – variable S_VOTE BHPS variable (JVOTE7) and question –
 #‘‘Did you vote in this (past) year’s general election?’’ Those who couldn’t vote are coded one others are coded 0.
@@ -216,21 +222,21 @@ BHPS_data$S_VOTE[BHPS_data$S_VOTE == 3] <- 1
 #S_HL_AWORKL is coded as one for those answering ‘A lot’ to JHLLTWA, 
 #S_HLAWORKLTL for those answering ‘Just a little’,
 #S_HLAWORKS for those answering ‘Somewhat’. The base is those answering ‘Not at all’.
-BHPS_data$S_HL_PWORK <- BHPS_data$JHLENDW[1]
-BHPS_data$S_HL_NAWORK <- BHPS_data$JHLENDW[3]
-BHPS_data$S_HL_AWORKL <- BHPS_data$JHLLTWA[1]
-BHPS_data$S_HLAWORKLTL <- BHPS_data$JHLLTWA[3]
-BHPS_data$S_HLAWORKS <- BHPS_data$JHLLTWA[4]
+BHPS_data$S_HL_PWORK <- as.numeric(BHPS_data$JHLENDW ==1)
+BHPS_data$S_HL_NAWORK <- as.numeric(BHPS_data$JHLENDW ==3)
+BHPS_data$S_HL_AWORKL <- as.numeric(BHPS_data$JHLLTWA ==1)
+BHPS_data$S_HLAWORKLTL <- as.numeric(BHPS_data$JHLLTWA ==3)
+BHPS_data$S_HLAWORKS <- as.numeric(BHPS_data$JHLLTWA ==4)
 
 #TYYTYVÄISYYS ELÄMÄÄN KOKONAISUUTENA. BHPS variable (JLFSATO) and question
 #‘‘How dissatisfied or satisfied are you with your life overall?’’ S_OALL coded 1 -7
+BHPS_data$JLFSATO[BHPS_data$JLFSATO < 0] <- NA
 BHPS_data$S_OALL <- BHPS_data$JLFSATO
-BHPS_data$S_OALL[BHPS_data$S_OALL < 0] <- NA
 
 #TYYTYVÄISYYS TERVEYTEEN. BHPS variable JLFSAT1 ) and question
 #‘‘How dissatisfied or satisfied are you with your health?’’ S_HEALTH coded 1 = Not satisfied at all – 7 = Completely satisfied
+BHPS_data$JLFSAT1[BHPS_data$JLFSAT1 < 0] <- NA
 BHPS_data$S_HEALTH <- BHPS_data$JLFSAT1
-BHPS_data$S_HEALTH[BHPS_data$S_HEALTH < 0] <- NA
 
 #TYYTYVÄISYYS TULOIHIN. JBHPS variable (JLFSAT2) and question
 #‘‘How dissatisfied or satisfied are you with the income of your household?’’S_H_INCOME coded 1 = Not satisfied at all – 7 = Completely satisfied
@@ -239,21 +245,26 @@ BHPS_data$S_H_INCOME <- BHPS_data$JLFSAT2
 
 #TYYTYVÄISYYS ASUMISEEN. BHPS variable (JLFSAT3) and question
 #‘‘How dissatisfied or satisfied are you with your house/flat?’’ S_HOUSE coded 1 = Not satisfied at all – 7 = Completely satisfied
+BHPS_data$JLFSAT3[BHPS_data$JLFSAT3< 0] <- NA
 BHPS_data$S_HOUSE <- BHPS_data$JLFSAT3
-BHPS_data$S_HOUSE[BHPS_data$S_HOUSE< 0] <- NA
+
+
 
 #TYYTYVÄISYYS PUOLISOON. BHPS variable (JLFSAT4) and question‘‘How dissatisfied or satisfied are 
 #you with your husband/ wife/partner?’’S_PARTNER2 coded 0 = no partner, 1 = Not satisfied atall – 7 = Completely satisfied
+BHPS_data$JLFSAT4[BHPS_data$JLFSAT4 < 0] <- NA
 BHPS_data$S_PARTNER2 <- BHPS_data$JLFSAT4
-BHPS_data$S_PARTNER2[BHPS_data$S_PARTNER2< 0] <- NA
+BHPS_data$D_NOPARTNER <- as.numeric(BHPS_data$S_PARTNER2 == 0)
 
 #TYYTYVÄISYYS TYÖHÖN. BHPS variable (JLFSAT5) and question
-#‘‘How dissatisfied or satisfied are you with your job?’’ S_JOB2 coded 0 = no job, 1 = Not satisfied at all –7 = Completely satisfied
+#‘‘How dissatisfied or satisfied are you with your job?’’ S_JOB2 coded 0 = no job, 1 = Not satisfied at all – 7 = Completely satisfied
+BHPS_data$JLFSAT5[BHPS_data$JLFSAT5 < 0] <- NA
 BHPS_data$S_JOB2 <- BHPS_data$JLFSAT5
-BHPS_data$S_JOB2[BHPS_data$S_JOB2< 0] <- NA
+BHPS_data$D_NOJOB <- as.numeric(BHPS_data$S_JOB2 == 0)
+summary(BHPS_data$D_NOJOB)
 
 #TYYTYVÄISYYS SOSIAALIELÄMÄÄN. BHPS variable (JLFSAT6) and question
-#‘‘How dissatisfied or satisfied are you with your social life?’’ S_SOCIAL coded 1 = Not satisfied at all – 7 = Completelysatisfied
+#‘‘How dissatisfied or satisfied are you with your social life?’’ S_SOCIAL coded 1 = Not satisfied at all – 7 = Completely satisfied
 BHPS_data$S_SOCIAL <- BHPS_data$JLFSAT6
 BHPS_data$S_SOCIAL[BHPS_data$S_SOCIAL< 0] <- NA
   
@@ -267,11 +278,30 @@ BHPS_data$S_QLEISURE[BHPS_data$S_QLEISURE< 0] <- NA
 BHPS_data$S_LEISURE <- BHPS_data$JLFSAT8
 BHPS_data$S_LEISURE[BHPS_data$S_LEISURE< 0]<- NA
 
+keep_columns2 <- c("S_OALL", "gender",  "S_HL_Limit" , "D_NOJOB" , "D_NOPARTNER" , "S_HEALTH" , "S_HOUSE" , "S_H_INCOME" , 
+                  "S_PARTNER2" , "S_JOB2" , "S_SOCIAL" , "S_LEISURE" , "S_QLEISURE" , "S_HL_NOURISH" , "S_H_LAC_MOVE" , 
+                  "S_S_CAR" , "S_H_CRIME" , "S_S_EDUCATE" , "S_W_CONCB" , "S_W_CONCL" , "S_W_CONCML", "S_W_SLEEPN" , "S_W_SLEEPM" , 
+                  "S_W_SLEEPMM" , "S_W_STRAINN" , "S_W_STRAINM" , "S_W_STRAINMM" , "S_W_DEPRESSN" , "S_W_DEPRESSM" , "S_W_DEPRESSMM" , 
+                  "S_W_CONFIDENTN" , "S_W_CONFIDENTM" , "S_W_CONFIDENTMM" , "S_W_DECIDEM" , "S_W_DECIDEL" , "S_W_DECIDEML" , "S_W_DIFICULTN" ,
+                  "S_W_DIFICULTM" , "S_W_DIFICULTMM" , "S_W_FACEUPM" , "S_W_FACEUPL" , "S_W_FACEUPL" , "S_S_HOLIDAY" , "S_S_CLOTHES" ,
+                  "S_S_MEAL" , "S_W_WORTHN" , "S_W_WORTHM" , "S_W_WORTHMM" , "S_W_ROLEM" , "S_W_ROLEL" , "S_W_ROLEML" , "S_W_HAPPYM" , 
+                  "S_W_HAPPYL" , "S_W_HAPPYML" , "S_W_EACTIVEM" , "S_W_EACTIVEL" , "S_W_EACTIVEML" , "S_VOTE" , "S_HL_NAWORK" , "S_HL_AWORKL" ,
+                  "S_HLAWORKLTL" , "S_HLAWORKS")
+BHPS1 <- dplyr::select(BHPS_data, one_of(keep_columns2))
 
-write.csv(BHPS_data, file = "/Applications/replikaatio/data/BHPS_data.csv")
-BHPS_data <- read.csv(file = "/Applications/replikaatio/data/BHPS_data.csv", sep=",", header =TRUE)
-summary(BHPS_data)
+
+##naisten ja miesten aineistot erikseen 
+BHPS1$gender
+BHPS_naiset <- subset(BHPS1, gender == 2)
+BHPS_miehet <- subset(BHPS1, gender == 1)
 
 
+write.csv(BHPS_naiset, file = "/Applications/replikaatio/data/BHPS_naiset.csv")
+write.csv(BHPS_miehet, file = "/Applications/replikaatio/data/BHPS_miehet.csv")
+
+BHPS_naiset <- read.csv(file = "/Applications/replikaatio/data/BHPS_naiset.csv", sep=",", header =TRUE)
+dim(BHPS_naiset)
+BHPS_miehet <- read.csv(file = "/Applications/replikaatio/data/BHPS_miehet.csv", sep=",", header =TRUE)
+dim(BHPS_miehet)
 
 

@@ -141,7 +141,7 @@ $(document).ready(function () {
 <div id="TOC">
 <ul>
 <li><a href="#replikoitava-tutkimus-ja-analyysi">REPLIKOITAVA TUTKIMUS JA ANALYYSI</a><ul>
-<li><a href="#muuttujamuunnokset">MUUTTUJAMUUNNOKSET</a></li>
+<li><a href="#aineisto-ja-muuttujat">AINEISTO JA MUUTTUJAT</a></li>
 </ul></li>
 <li><a href="#replikaatio">REPLIKAATIO</a><ul>
 <li><a href="#malli-1">MALLI 1</a></li>
@@ -156,19 +156,23 @@ $(document).ready(function () {
 
 <div id="replikoitava-tutkimus-ja-analyysi" class="section level1">
 <h1>REPLIKOITAVA TUTKIMUS JA ANALYYSI</h1>
-<p>Replikoitavaksi tutkimukseksi valitsin Paul Anandin, Graham Hunterin ja Ron Smithin lineaarisen regressioanalyysin. Anand, Hunter ja Smith tarkastelivat toimintamahdollisuuksien ja elämään tyytyväisyyden yhteyksiä. Analyysi ja tulokset ovat esitetty artikkelissa “Capabilities and well-being: evidence based on the Sen-Nussbaum approach to welfare”. Artikkeli löytyy täältä: <a href="http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf">Capabilities and well-being (Anand, Hunter &amp; Smith)</a> Tutkimuksessaan, Anand, Hunter ja Smith käyttävät lineaarista regressioanalyysia tutkiessaan erilaisten toimintamahdollisuuksien korrelaatiota elämään tyytyväisyyden kanssa. Toimintamahdollisuus-muuttujat he ovat operationalisoineet Martha Nussbaumin 10 toimintamahdollisuuden listasta. ##AINEISTO JA MUUTTUJAT Aineisto tässä analyysissa, on täysin sama kuin Anandin, Hunterin ja Smithin analyysissakin. Aineisto on siis British Household Panel Survey:n [BHPS] vuoden 2000 otanta eli kymmenes otantakerta. BHPS pitää sisällään tietoa yli 16-vuotiaiden elämäntavoista, hyvinvoinnista ja yleisesti hyvin kattavasti elämän eri osa-alueista. BHPS on kerätty pitkälti kotona tehtyinä haastatteluilla. Lisätietoa vuoden 2000 aineistosta löydät täältä: <a href="https://www.iser.essex.ac.uk/bhps/documentation/pdf_versions/index.html">BHPS 2000</a> ja yleisesti BHPS:stä täältä: <a href="https://www.iser.essex.ac.uk/bhps">British household panel survey</a></p>
+<p>Replikoitavaksi tutkimukseksi valitsin Paul Anandin, Graham Hunterin ja Ron Smithin lineaarisen regressioanalyysin. Anand, Hunter ja Smith tarkastelivat toimintamahdollisuuksien ja elämään tyytyväisyyden yhteyksiä. Analyysi ja tulokset ovat esitetty artikkelissa “Capabilities and well-being: evidence based on the Sen-Nussbaum approach to welfare”. Artikkeli löytyy täältä: <a href="http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf">Capabilities and well-being (Anand, Hunter &amp; Smith)</a> Tutkimuksessaan, Anand, Hunter ja Smith käyttävät lineaarista regressioanalyysia tutkiessaan erilaisten toimintamahdollisuuksien korrelaatiota elämään tyytyväisyyden kanssa. Toimintamahdollisuus-muuttujat he ovat operationalisoineet Martha Nussbaumin 10 toimintamahdollisuuden listasta.</p>
+<div id="aineisto-ja-muuttujat" class="section level2">
+<h2>AINEISTO JA MUUTTUJAT</h2>
+<p>Aineisto tässä analyysissa, on täysin sama kuin Anandin, Hunterin ja Smithin analyysissakin. Aineisto on siis British Household Panel Survey:n [BHPS] vuoden 2000 otanta eli kymmenes otantakerta. BHPS pitää sisällään tietoa yli 16-vuotiaiden elämäntavoista, hyvinvoinnista ja yleisesti hyvin kattavasti elämän eri osa-alueista. BHPS on kerätty pitkälti kotona tehtyinä haastatteluilla. Lisätietoa vuoden 2000 aineistosta löydät täältä: <a href="https://www.iser.essex.ac.uk/bhps/documentation/pdf_versions/index.html">BHPS 2000</a> ja yleisesti BHPS:stä täältä: <a href="https://www.iser.essex.ac.uk/bhps">British household panel survey</a></p>
 <p>Koska Anandin, Hunterin ja Smithin analyysissa miehiä ja naisia on tarkasteltu erikseen, jaoin BHPS 2000 aineiston miesten ja naisten aineistoiksi. Vastaajista naisia oli yhteensä 8 426 ja miehiä 7 177. Miehiä oli siis reilu tuhat vähemmän vuoden 2000 otannassa.</p>
-<div id="muuttujamuunnokset" class="section level2">
-<h2>MUUTTUJAMUUNNOKSET</h2>
+<div id="muuttujamuunnokset" class="section level3">
+<h3>MUUTTUJAMUUNNOKSET</h3>
 <p>Muuttujamuunnokset, jotka ovat tehty replikoitavan analyysin pohjalta ja mukaisesti löytyvät täältä: <a href="https://github.com/AnnikaLehmusSun/replikaatio/blob/master/data/muuttujamuunnokset.R">muuttujamuunnokset replikaatiota varten</a></p>
-<div id="puuttuvat-tiedot" class="section level3">
-<h3>PUUTTUVAT TIEDOT</h3>
+<div id="puuttuvat-tiedot" class="section level4">
+<h4>PUUTTUVAT TIEDOT</h4>
 <p>Anand, Hunter ja Smith eivät maininneet artikkelissaan, mitä he tekivät niin kutsutuille puuttuville tiedoilla. Puuttuvat tiedot BHPS-aineistossa ovat koodattu seuraavanlaisesti: -9 = Missing or wild; -8 = Inapplicable; -7 = Proxy and or phone; -2 = Refused ja -1 = Not answered.</p>
 <p>Koska Anand, Hunter ja Smith eivät maininneet, mitä he tekivät näille arvoille (-1 - (-7)) analyysissaan, heikentää se luonnollisesti tutkimuksen toistettavuutta. Oletan, että puuttuvat arvot ovat merkitty NA, eli “non available” - muotoon, joten uudelleen koodasin arvot -1 -(-7) muotoon NA.</p>
 </div>
-<div id="muuttujalista" class="section level3">
-<h3>MUUTTUJALISTA</h3>
+<div id="muuttujalista" class="section level4">
+<h4>MUUTTUJALISTA</h4>
 <p>Anand, Hunter ja Smith käyttivät analyysissaan seuraavia muuttujia (tummennetulla uudelleen koodaus, jonka vieressä lomakkeessa kysytty kysymys):</p>
+</div>
 <div id="toimintamahdollisuudet" class="section level4">
 <h4>TOIMINTAMAHDOLLISUUDET:</h4>
 <ul>
@@ -239,8 +243,8 @@ BHPS_naiset$X &lt;- NULL
 BHPS_miehet$X &lt;- NULL</code></pre>
 <div id="malli-1" class="section level2">
 <h2>MALLI 1</h2>
-<div id="tyytyvaisyys-elamaan-kokonaisuutena-ja-osatyytyvaisyydet-naiset" class="section level3">
-<h3>TYYTYVÄISYYS ELÄMÄÄN KOKONAISUUTENA JA OSATYYTYVÄISYYDET, NAISET</h3>
+<div id="tyytyvaisyys-elamaan-kokonaisuutena-ja-osatyytyvaisyydet-naiset" class="section level4">
+<h4>TYYTYVÄISYYS ELÄMÄÄN KOKONAISUUTENA JA OSATYYTYVÄISYYDET, NAISET</h4>
 <pre class="r"><code>model1F &lt;- lm(S_OALL ~ D_NOJOB + D_NOPARTNER + S_HEALTH + S_HOUSE + S_H_INCOME + S_PARTNER2 + S_JOB2 + S_SOCIAL + S_LEISURE + S_QLEISURE, data = BHPS_naiset)
 summary(model1F)</code></pre>
 <pre><code>## 
@@ -275,8 +279,8 @@ summary(model1F)</code></pre>
 ## F-statistic: 976.8 on 10 and 7679 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p> </p>
 </div>
-<div id="tyytyvaisyys-elamaan-kokonaisuutena-ja-osatyytyvaisyydet-miehet" class="section level3">
-<h3>TYYTYVÄISYYS ELÄMÄÄN KOKONAISUUTENA JA OSATYYTYVÄISYYDET, MIEHET</h3>
+<div id="tyytyvaisyys-elamaan-kokonaisuutena-ja-osatyytyvaisyydet-miehet" class="section level4">
+<h4>TYYTYVÄISYYS ELÄMÄÄN KOKONAISUUTENA JA OSATYYTYVÄISYYDET, MIEHET</h4>
 <pre class="r"><code>model1M &lt;- lm(S_OALL ~ D_NOJOB + D_NOPARTNER + S_HEALTH + S_HOUSE + S_H_INCOME + S_PARTNER2 + S_JOB2 + S_SOCIAL + S_LEISURE + S_QLEISURE, data = BHPS_miehet)
 summary(model1M)</code></pre>
 <pre><code>## 
@@ -311,8 +315,8 @@ summary(model1M)</code></pre>
 ## F-statistic: 891.5 on 10 and 6448 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p> </p>
 </div>
-<div id="yhdenmukaisuus-anand-hunter-ja-smithin-analyysiin" class="section level3">
-<h3>YHDENMUKAISUUS ANAND, HUNTER JA SMITHIN ANALYYSIIN</h3>
+<div id="yhdenmukaisuus-anand-hunter-ja-smithin-analyysiin" class="section level4">
+<h4>YHDENMUKAISUUS ANAND, HUNTER JA SMITHIN ANALYYSIIN</h4>
 <p>Naisten kohdalla mallit ovat käytännössä samat oman mallin ja Anandin, Hunterin ja Smithin [AHS] mallin kanssa. AHS:n malli löytyy sivulta 20 taulukosta 2 <a href="http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf">(artikkeli täällä).</a></p>
 <p>Myös miesten kohdalla mallit olivat pitkälti samat yhtä poikkeusta lukuunottamatta. S_QLEISURE - muuttuja oli saanut omassa mallissani negatiivisen korrelaation tyytyväisyyden kanssa, kun taas AHS:n mallissa korrealatio oli positiivinen. Joka tapauksessa, korrelaatio oli molempien malleissa erittäin pieni n. 0.0005. AHS:n malli löytyy sivulta 21 taulukosta 3 <a href="http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf">(artikkeli täällä).</a>  </p>
 </div>
@@ -320,8 +324,8 @@ summary(model1M)</code></pre>
 <div id="residuaalit-malleihin-2-ja-3" class="section level2">
 <h2>RESIDUAALIT MALLEIHIN 2 JA 3</h2>
 <p>Malleissa 2 ja 3 Anand, Hunter ja Smith ovat lisänneet personallisuuteen liittyvät tekijät (personality traits). Toisin sanoen, he ovat tarkastelleet millä tavoin eri tekijät korreloivat keskenään, ja lisänneet näistä residuaali-muuttujat malleihin 2 ja 3. Anand, Hunter ja Smith tekivät siis 10 regressioanalyysia, joissa oli aina vuorollaan yksi tyytyväisyyden osatekijä (kuten tyytyväisyys työhön) selittäjänä ja selitettävinä tekijöinä olivat toimintamahdollisuus-muuttujat, erikseen miehille ja naisille. Näistä regressiomalleista, he ovat ilmeisesti tallentaneet residuaalit aineistoonsa ja käyttäneet niitä sitten alkuperäisten muuttujien sijasta. Tällä tavoin on ymmärtääkseni pyritty karsimaan persoonallisuuden osuus pois. Alla on siis koodit ensin regressiomalleihin ja sitten residuaalien tallentamiseen. Mainittakoon, että tämä kohta analyysista oli haastava kahdesta syystä. Ensinäkin en ollut aivan varma, mitä Anand, Hunter ja Smith yrittivät tässä kohtaa tehdä ja toiseksi miten he sen tekivät, sillä heidän artikkelissaan residuaali-muuttujien luonti ei ollut kovinkaan selkeästi ilmaistuna.</p>
-<div id="regressiomallit-osatyytyvaisyydet-selittajana-naiset-koodi" class="section level3">
-<h3>REGRESSIOMALLIT OSATYYTYVÄISYYDET SELITTÄJÄNÄ, NAISET (KOODI)</h3>
+<div id="regressiomallit-osatyytyvaisyydet-selittajana-naiset-koodi" class="section level4">
+<h4>REGRESSIOMALLIT OSATYYTYVÄISYYDET SELITTÄJÄNÄ, NAISET (KOODI)</h4>
 <pre class="r"><code>model1F_DNOJOB &lt;- lm(D_NOJOB ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_naiset)
 
 model1F_DNOPARTNER &lt;- lm(D_NOPARTNER ~  S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_naiset)
@@ -344,8 +348,8 @@ model1F_LEISURE &lt;- lm(S_LEISURE  ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +
 
 model1F_QLEISURE &lt;- lm(S_QLEISURE ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_naiset)</code></pre>
 </div>
-<div id="regressiomallit-osatyytyvaisyydet-selittajana-miehet-koodi" class="section level3">
-<h3>REGRESSIOMALLIT OSATYYTYVÄISYYDET SELITTÄJÄNÄ, MIEHET (KOODI)</h3>
+<div id="regressiomallit-osatyytyvaisyydet-selittajana-miehet-koodi" class="section level4">
+<h4>REGRESSIOMALLIT OSATYYTYVÄISYYDET SELITTÄJÄNÄ, MIEHET (KOODI)</h4>
 <pre class="r"><code>model1M_DNOJOB &lt;- lm(D_NOJOB ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_miehet)
 
 model1M_DNOPARTNER &lt;- lm(D_NOPARTNER ~  S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_miehet)
@@ -366,8 +370,8 @@ model1M_LEISURE &lt;- lm(S_LEISURE  ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +
 
 model1M_QLEISURE &lt;- lm(S_QLEISURE ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS, data = BHPS_miehet)</code></pre>
 </div>
-<div id="regressiomallien-residuaalien-tallentaminen-bhps_naiset-ja-bhps_miehet-aineistoihin-koodi" class="section level3">
-<h3>REGRESSIOMALLIEN RESIDUAALIEN TALLENTAMINEN BHPS_naiset JA BHPS_miehet AINEISTOIHIN (KOODI)</h3>
+<div id="regressiomallien-residuaalien-tallentaminen-bhps_naiset-ja-bhps_miehet-aineistoihin-koodi" class="section level4">
+<h4>REGRESSIOMALLIEN RESIDUAALIEN TALLENTAMINEN BHPS_naiset JA BHPS_miehet AINEISTOIHIN (KOODI)</h4>
 <pre class="r"><code>#naiset ensin
 BHPS_naiset &lt;- add_residuals(data=BHPS_naiset, model=model1F_DNOJOB, var=&quot;RESIDF_DNOJOB&quot;)
 BHPS_naiset &lt;-add_residuals(data=BHPS_naiset, model=model1F_DNOPARTNER, var=&quot;RESIDF_DNOPARTNR&quot;)
@@ -396,8 +400,8 @@ BHPS_miehet &lt;-add_residuals(data=BHPS_miehet, model=model1M_QLEISURE, var=&qu
 </div>
 <div id="malli-2" class="section level2">
 <h2>MALLI 2</h2>
-<div id="tyytyvaisyys-elamaan-kokonaisuutena-ja-osatyytyvaisyyfet-residuaaleina-naiset" class="section level3">
-<h3>TYYTYVÄISYYS ELÄMÄÄN KOKONAISUUTENA JA OSATYYTYVÄISYYFET RESIDUAALEINA, NAISET</h3>
+<div id="tyytyvaisyys-elamaan-kokonaisuutena-ja-osatyytyvaisyyfet-residuaaleina-naiset" class="section level4">
+<h4>TYYTYVÄISYYS ELÄMÄÄN KOKONAISUUTENA JA OSATYYTYVÄISYYFET RESIDUAALEINA, NAISET</h4>
 <pre class="r"><code>model2F &lt;- lm(S_OALL ~ D_NOJOB + D_NOPARTNER + S_HEALTH + S_HOUSE + S_H_INCOME + S_PARTNER2 + S_JOB2 + S_SOCIAL + S_LEISURE + S_QLEISURE + RESIDF_DNOJOB + RESIDF_DNOPARTNR + RESIDF_HEALTH + RESIDF_HOUSE + RESIDF_H_INCOME + RESIDF_PARTNER + RESIDF_JOB + RESIDF_SOCIAL + RESIDF_LEISURE + RESIDF_QLEISURE, data = BHPS_naiset)
 summary(model2F)</code></pre>
 <pre><code>## 
@@ -444,8 +448,8 @@ summary(model2F)</code></pre>
 ## F-statistic: 53.45 on 20 and 663 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p> </p>
 </div>
-<div id="tyytyvaisyys-elamaan-kokonaisuutena-ja-osatyytyvaisyyfet-residuaaleina-miehet" class="section level3">
-<h3>TYYTYVÄISYYS ELÄMÄÄN KOKONAISUUTENA JA OSATYYTYVÄISYYFET RESIDUAALEINA, MIEHET</h3>
+<div id="tyytyvaisyys-elamaan-kokonaisuutena-ja-osatyytyvaisyyfet-residuaaleina-miehet" class="section level4">
+<h4>TYYTYVÄISYYS ELÄMÄÄN KOKONAISUUTENA JA OSATYYTYVÄISYYFET RESIDUAALEINA, MIEHET</h4>
 <pre class="r"><code>model2M &lt;- lm(S_OALL  ~ D_NOJOB + D_NOPARTNER + S_HEALTH + S_HOUSE + S_H_INCOME + S_PARTNER2 + S_JOB2 + S_SOCIAL + S_LEISURE + S_QLEISURE + RESIDM_DNOJOB + RESIDM_DNOPARTNR + RESIDM_HEALTH + RESIDM_HOUSE + RESIDM_H_INCOME + RESIDM_PARTNER + RESIDM_JOB + RESIDM_SOCIAL + RESIDM_LEISURE + RESIDM_QLEISURE, data = BHPS_miehet)
 summary(model2M)</code></pre>
 <pre><code>## 
@@ -492,8 +496,8 @@ summary(model2M)</code></pre>
 ## F-statistic: 43.63 on 20 and 429 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p> </p>
 </div>
-<div id="yhdenmukaisuus-anand-hunter-ja-smithin-analyysiin-1" class="section level3">
-<h3>YHDENMUKAISUUS ANAND, HUNTER JA SMITHIN ANALYYSIIN</h3>
+<div id="yhdenmukaisuus-anand-hunter-ja-smithin-analyysiin-1" class="section level4">
+<h4>YHDENMUKAISUUS ANAND, HUNTER JA SMITHIN ANALYYSIIN</h4>
 <p>Toisin kuin ensimmäinen malli, malli 2 eroaa huomattavasti AHS:n toisesta mallista. Mielenkiintoinen huomio on, että naisten ja miesten väliset erot ovat samanlaiset omien mallien välillä mitä AHS:n mallien sukupuolten väliset erot. Siitä huolimatta, että erot naisten ja miesten välillä tuntuu olevan samankaltaiset, itse arvot eroavat suuresti omien mallien ja AHS:n mallien välillä.</p>
 <p>Naisten kohdalla selkeimmät erot tulivat työ ja partneri -muuttujien kohdalla. Etenkin D_NOJOB, D_NOPARTNER, S_PARTNER2 ja RESIDF_DNOPARTNR - kohdissa erot olivat erityisen merkittävät. Esimerkiksi tyytyväisyyttä puolisoon mittaava S_PARTNER2 sai omassa mallissani korrealatiokertoimen 0.47 ja AHS:n mallissa 1,07. Vielä suurempi ero oli D_NOPARTNER-muuttujan kohdalla, joka siis indikoi, ettei vastaajalla ole parisuhdetta, tämä muuttuja sai omassa mallissani arvon 2,89 ja AHS:n mallissa 6.48. AHS:n malli löytyy sivulta 23 taulukosta 5<br />
 <a href="http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf">(artikkeli täällä).</a></p>
@@ -502,8 +506,8 @@ summary(model2M)</code></pre>
 </div>
 <div id="malli-3" class="section level2">
 <h2>MALLI 3</h2>
-<div id="tyytyvaisyys-elamaan-kokonaisuutena-ja-toimintamahdollisuudet-seka-osatyytyvaisyydet-residuaaleina-naiset" class="section level3">
-<h3>TYYTYVÄISYYS ELÄMÄÄN KOKONAISUUTENA JA TOIMINTAMAHDOLLISUUDET SEKÄ OSATYYTYVÄISYYDET RESIDUAALEINA, NAISET</h3>
+<div id="tyytyvaisyys-elamaan-kokonaisuutena-ja-toimintamahdollisuudet-seka-osatyytyvaisyydet-residuaaleina-naiset" class="section level4">
+<h4>TYYTYVÄISYYS ELÄMÄÄN KOKONAISUUTENA JA TOIMINTAMAHDOLLISUUDET SEKÄ OSATYYTYVÄISYYDET RESIDUAALEINA, NAISET</h4>
 <pre class="r"><code>model3F &lt;- lm(S_OALL ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS + RESIDF_DNOJOB + RESIDF_DNOPARTNR + RESIDF_HEALTH + RESIDF_HOUSE + RESIDF_H_INCOME + RESIDF_PARTNER + RESIDF_JOB + RESIDF_SOCIAL + RESIDF_LEISURE + RESIDF_QLEISURE, data = BHPS_naiset)
 summary(model3F)</code></pre>
 <pre><code>## 
@@ -598,8 +602,8 @@ summary(model3F)</code></pre>
 ## F-statistic: 21.28 on 59 and 624 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p> </p>
 </div>
-<div id="tyytyvaisyys-elamaan-kokonaisuutena-ja-toimintamahdollisuudet-seka-osatyytyvaisyydet-residuaaleina-miehet" class="section level3">
-<h3>TYYTYVÄISYYS ELÄMÄÄN KOKONAISUUTENA JA TOIMINTAMAHDOLLISUUDET SEKÄ OSATYYTYVÄISYYDET RESIDUAALEINA, MIEHET</h3>
+<div id="tyytyvaisyys-elamaan-kokonaisuutena-ja-toimintamahdollisuudet-seka-osatyytyvaisyydet-residuaaleina-miehet" class="section level4">
+<h4>TYYTYVÄISYYS ELÄMÄÄN KOKONAISUUTENA JA TOIMINTAMAHDOLLISUUDET SEKÄ OSATYYTYVÄISYYDET RESIDUAALEINA, MIEHET</h4>
 <pre class="r"><code>model3M &lt;- lm(S_OALL ~ S_HL_Limit + S_HL_NOURISH + S_H_LAC_MOVE +S_S_CAR + S_H_CRIME + S_S_EDUCATE + S_W_CONCB + S_W_CONCL + S_W_CONCML + S_W_SLEEPN + S_W_SLEEPM + S_W_SLEEPMM + S_W_STRAINN + S_W_STRAINM + S_W_STRAINMM + S_W_DEPRESSN + S_W_DEPRESSM + S_W_DEPRESSMM + S_W_CONFIDENTN + S_W_CONFIDENTM + S_W_CONFIDENTMM + S_W_DECIDEM + S_W_DECIDEL + S_W_DECIDEML + S_W_DIFICULTN + S_W_DIFICULTM + S_W_DIFICULTMM + S_W_FACEUPM + S_W_FACEUPL + S_W_FACEUPL + S_S_HOLIDAY + S_S_CLOTHES + S_S_MEAL + S_W_WORTHN + S_W_WORTHM + S_W_WORTHMM + S_W_ROLEM + S_W_ROLEL + S_W_ROLEML + S_W_HAPPYM + S_W_HAPPYL + S_W_HAPPYML + S_W_EACTIVEM + S_W_EACTIVEL + S_W_EACTIVEML + S_VOTE + S_HL_NAWORK + S_HL_AWORKL + S_HLAWORKLTL + S_HLAWORKS + RESIDM_DNOJOB + RESIDM_DNOPARTNR + RESIDM_HEALTH + RESIDM_HOUSE + RESIDM_H_INCOME + RESIDM_PARTNER + RESIDM_JOB + RESIDM_SOCIAL + RESIDM_LEISURE + RESIDM_QLEISURE, data = BHPS_miehet)
 summary(model3M)</code></pre>
 <pre><code>## 
@@ -694,8 +698,8 @@ summary(model3M)</code></pre>
 ## F-statistic: 17.46 on 59 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p> </p>
 </div>
-<div id="yhdenmukaisuus-anand-hunter-ja-smithin-analyysiin-2" class="section level3">
-<h3>YHDENMUKAISUUS ANAND, HUNTER JA SMITHIN ANALYYSIIN</h3>
+<div id="yhdenmukaisuus-anand-hunter-ja-smithin-analyysiin-2" class="section level4">
+<h4>YHDENMUKAISUUS ANAND, HUNTER JA SMITHIN ANALYYSIIN</h4>
 <p>Siinä missä malli 1 oli käytännössä sama kuin AHS:n malli 1 ja malli 2 erosi merkittävästi AHS:n mallista 2, niin malli 3 on jotain siltä väliltä. Mielenkiintoista oli huomata, että naisten mallien välillä oli pienemmät erot kuin miesten mallien välillä, ja, että kokonaisuudessa erot mallien 3 välillä olivat paljon pienemmät kuin mitä malleissa 2.</p>
 <p>Naisten vastauksia sisältävässä mallissa selkeimmät erot olivat muuttujien S_W_CONCML ja S_W_DECIDEML kohdalla. Keskittymistä kuvaava muuttuja S_W_CONCML sai omassa mallissani korrelaatiokertoimen 0.47 ja AHS:n mallissa 0.07, puolestaan päätöksentekoa kuvaava muuttuja S_W_DECIDEML sai AHS:n mallissa arvon 0.18 ja omassa mallissani -0.82. Selkeitä suuria eroja näiden lisäksi oli myös arvokkaaksi kokemisen muuttujissa (S_HL_AWORKL). AHS:n malli löytyy sivuilta 26-27 taulukosta 7 <a href="http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf">(artikkeli täällä).</a></p>
 <p>Miesten kohdalla puolestaan erot olivat suurempia kuin naisten kohdalla AHS:n mallin kanssa. Erityisen mielenkiintoista tämä on kun verrataan malliin 2, jossa juuri miesten väliset erot oman ja AHS:n mallin välillä olivat pienemmät kuin naisten. Mallissa 3 suuria eroavaisuuksia oli etenkin seuraavien muuttujien kohdalla S_S_CAR (malli 3: 0.25, AHS: 0.07), S_W_CONCML (malli 3: 0.82, AHS: 0.16), S_W_ROLEML (malli 3: -0.74, AHS: -0.09), S_W_ROLEL (malli 3: -0.53, AHS: -0.16), S_HL_NAWORK (malli3 : -0.74, AHS: -0.17). AHS:n malli löytyy sivuilta 28-29, taulukosta 8 <a href="http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf">(artikkeli täällä).</a>  </p>
@@ -705,8 +709,8 @@ summary(model3M)</code></pre>
 <div id="tulokset-ja-pohdintaa-tieteen-toistettavuudesta" class="section level1">
 <h1>TULOKSET JA POHDINTAA TIETEEN TOISTETTAVUUDESTA</h1>
 <p>Alla on kuvattu Anand, Hunter ja Smithin tulokset ensin ja suluissa tummennetulla ovat tämän analyysin tulokset:</p>
-<div id="tekijat-jotka-korreloivat-negatiivisesti-elamaan-tyytyvaisyyden-kanssa" class="section level3">
-<h3>Tekijät, jotka korreloivat NEGATIIVISESTI elämään tyytyväisyyden kanssa:</h3>
+<div id="tekijat-jotka-korreloivat-negatiivisesti-elamaan-tyytyvaisyyden-kanssa" class="section level4">
+<h4>Tekijät, jotka korreloivat NEGATIIVISESTI elämään tyytyväisyyden kanssa:</h4>
 <ul>
 <li>S_HL_LIMIT terveyden elämää rajoittava vaikutus. Naiset: 0.32 (<strong>0.44</strong>). Miehet: 0.26 (<strong>0.52</strong>)</li>
 <li>S_S_CAR ei mahdollisuutta auton käyttöön. Naiset: syrjäytetty huonon p-arvon vuoksi [SHPV] (<strong>H</strong>). Miehet: 0.07 (<strong>0.25</strong>)</li>
@@ -723,8 +727,8 @@ summary(model3M)</code></pre>
 <li>S_S_EDUCATE korkea koulutus. Naiset: 0.13 (<strong>SHPV</strong>). Miehet: 0.16 (<strong>0.22</strong>)</li>
 </ul>
 </div>
-<div id="tekijat-jotka-korreloivat-positiivisesti-elamaan-tyytyvaisyyden-kanssa" class="section level3">
-<h3>Tekijät, jotka korreloivat POSITIIVISESTI elämään tyytyväisyyden kanssa:</h3>
+<div id="tekijat-jotka-korreloivat-positiivisesti-elamaan-tyytyvaisyyden-kanssa" class="section level4">
+<h4>Tekijät, jotka korreloivat POSITIIVISESTI elämään tyytyväisyyden kanssa:</h4>
 <ul>
 <li>S_HL_NOURISH mahdollisuus syödä liharuokia joka toinen päivä. Naiset: 0.17 (<strong>0.35</strong>). Miehet: 0.25 (<strong>0.22</strong>)</li>
 <li>S_S_HOLIDAY mahdollisuus käydä matkoilla kerran vuodessa. Naiset: 0.22 (<strong>SHPV</strong>). Miehet: 0.21 (<strong>SHPV</strong>) <strong>&lt;– miksi SHPV?</strong></li>
@@ -736,8 +740,8 @@ summary(model3M)</code></pre>
 <li>S_W_CONCML pystyy keskittymään tekemisiin vähemmän kuin aiemmin. Naiset: SHPV (<strong>0.47</strong>). Miehet: 0.16 (<strong>0.81</strong>) <strong>&lt;– rakastuneita? miksi ero?</strong></li>
 <li>S_W_STRAINN ei ole ollut viimeaikoina “kuormittunut”. Naiset: 0.16 (<strong>0.23</strong>). Miehet: 0.14 (<strong>0.33</strong>)</li>
 </ul>
-<div id="tekijat-jotka-eivat-korreloi-tyytyvaisyyteen-elamaan-kanssa" class="section level4">
-<h4>Tekijät, jotka eivät korreloi tyytyväisyyteen elämään kanssa</h4>
+<div id="tekijat-jotka-eivat-korreloi-tyytyvaisyyteen-elamaan-kanssa" class="section level5">
+<h5>Tekijät, jotka eivät korreloi tyytyväisyyteen elämään kanssa</h5>
 <ul>
 <li>S_VOTE äänestäminen vaaleissa. Naiset: SHPV (<strong>SHPV</strong>). Miehet: SHPV (<strong>SHPV</strong>)</li>
 <li>S_W_CONCB; S_W_CONCL; mahdollisuus keskittyä tekemisiin. Naiset: SHPV (<strong>SHPV</strong>). Miehet: SHPV (<strong>SHPV</strong>)</li>

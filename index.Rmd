@@ -109,7 +109,7 @@ Myös miesten kohdalla mallit olivat pitkälti samat yhtä poikkeusta lukuunotta
 
 
 ##RESIDUAALIT MALLEIHIN 2 JA 3
-Malleissa 2 ja 3 Anand, Hunter ja Smith ovat lisänneet personallisuuteen (personality traits) liittyvät tekijät, eli katsoneet millä tavoin eri tekijät korreloivat keskenään, ja lisänneet näistä residuaali-muuttujat malleihin 2 ja 3. He tekivät siis 10 regressioanalyysia, joissa vuorollaan aina yksi tyytyväisyyden osatekijä (kuten tyytyväisyys työhön) on selittäjänä ja selitettävänä toimintamahdollisuus-muuttujat, erikseen miehille ja naisille. Näistä regressiomalleista, he ovat tallentaneet residuaalit aineistoonsa ja käyttäneet niitä sitten alkuperäisten muuttujien sijasta. Tällä tavoin on ilmeisesti yritetty karsia persoonallisuuden osuus pois. Alla on siis koodit ensin regressiomalleihin ja sitten residuaalien tallentamiseen. Mainittakoon, että tämä kohta analyysista ei ollut kaikista selkein sisällöltään, muttei myöskään ilmaistuna Anandin, Hunterin ja Smithin analyysissa. 
+Malleissa 2 ja 3 Anand, Hunter ja Smith ovat lisänneet personallisuuteen liittyvät tekijät (personality traits). Toisin sanoen, he ovat tarkastelleet millä tavoin eri tekijät korreloivat keskenään, ja lisänneet näistä residuaali-muuttujat malleihin 2 ja 3. Anand, Hunter ja Smith tekivät siis 10 regressioanalyysia, joissa oli aina vuorollaan yksi tyytyväisyyden osatekijä (kuten tyytyväisyys työhön) selittäjänä ja selitettävinä tekijöinä olivat toimintamahdollisuus-muuttujat, erikseen miehille ja naisille. Näistä regressiomalleista, he ovat ilmeisesti tallentaneet residuaalit aineistoonsa ja käyttäneet niitä sitten alkuperäisten muuttujien sijasta. Tällä tavoin on ymmärtääkseni pyritty karsimaan persoonallisuuden osuus pois. Alla on siis koodit ensin regressiomalleihin ja sitten residuaalien tallentamiseen. Mainittakoon, että tämä kohta analyysista oli haastava kahdesta syystä. Ensinäkin en ollut aivan varma, mitä Anand, Hunter ja Smith yrittivät tässä kohtaa tehdä ja toiseksi miten he sen tekivät, sillä heidän artikkelissaan residuaali-muuttujien luonti ei ollut kovinkaan selkeästi ilmaistuna. 
 
 ####REGRESSIOMALLIT OSATYYTYVÄISYYDET SELITTÄJÄNÄ, NAISET (KOODI)
 ```{r}
@@ -211,9 +211,9 @@ summary(model2M)
 
 ####YHDENMUKAISUUS ANAND, HUNTER JA SMITHIN ANALYYSIIN
 
-Toisin kuin ensimmäisessä mallissa, malli 2 eroaa huomattavasti AHS:n toisesta mallista. Mielenkiintoinen huomio on, että naisten ja miesten väliset erot arvoissa ovat samanlaiset omien mallien välillä mitä AHS:n mallien välillä. Siitä huolimatta, että erot naisten ja miesten välillä tuntuu olevan samankaltaiset, itse arvot eroavat suuresti. 
+Toisin kuin ensimmäinen malli, malli 2 eroaa huomattavasti AHS:n toisesta mallista. Mielenkiintoinen huomio on, että naisten ja miesten väliset erot ovat samanlaiset omien mallien välillä mitä AHS:n mallien sukupuolten väliset erot. Siitä huolimatta, että erot naisten ja miesten välillä tuntuu olevan samankaltaiset, itse arvot eroavat suuresti omien mallien ja AHS:n mallien välillä. 
 
-Naisten kohdalla selkeimmät erot tulivat työn ja partneri -muuttujien kohdalla. Etenkin  D_NOJOB, D_NOPARTNER, S_PARTNER2 ja RESIDF_DNOPARTNR - kohdissa erot olivat erityisen merkittävät. Esimerkiksi tyytyväisyyttä puolisoon mittaava S_PARTNER2 sai omassa mallissani estimaatin 0.47 ja AHS:n mallissa 1,07. Vielä suurempi ero oli D_NOPARTNER-muuttujan kohdalla, joka siis indikoi, ettei vastaajalla ole parisuhdetta, sai omassa mallissani arvon 2,89 ja AHS:n mallissa 6.48. AHS:n malli löytyy sivulta 23 taulukosta 5  
+Naisten kohdalla selkeimmät erot tulivat työ ja partneri -muuttujien kohdalla. Etenkin  D_NOJOB, D_NOPARTNER, S_PARTNER2 ja RESIDF_DNOPARTNR - kohdissa erot olivat erityisen merkittävät. Esimerkiksi tyytyväisyyttä puolisoon mittaava S_PARTNER2 sai omassa mallissani korrealatiokertoimen 0.47 ja AHS:n mallissa 1,07. Vielä suurempi ero oli D_NOPARTNER-muuttujan kohdalla, joka siis indikoi, ettei vastaajalla ole parisuhdetta, tämä muuttuja sai omassa mallissani arvon 2,89 ja AHS:n mallissa 6.48. AHS:n malli löytyy sivulta 23 taulukosta 5  
 [(artikkeli täällä).](http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf) 
 
 Myös miesten kohdalla mallit erosivat merkittävästi AHS:n mallista. Huomioitavaa on kuitenkin se, että erot AHS:n mallin kanssa olivat pienemmät kuin naisten kohdalla. Miesten kohdalla etenkin RESIDM_JOB-muuttujan kohdalla oli eroavaisuuksia, omassa mallissani reisudaali tyytyväisyydestä työhön sai korrelaatiokertoimen 0.03 ja AHS:n mallissa puolestaan -0.21. AHS:n malli löytyy sivulta 24 taulukosta 6 
@@ -243,53 +243,53 @@ Siinä missä malli 1 oli käytännössä sama kuin AHS:n malli 1 ja malli 2 ero
 
 Naisten vastauksia sisältävässä mallissa selkeimmät erot olivat muuttujien S_W_CONCML ja S_W_DECIDEML kohdalla. Keskittymistä kuvaava muuttuja S_W_CONCML sai omassa mallissani korrelaatiokertoimen 0.47 ja AHS:n mallissa 0.07, puolestaan päätöksentekoa kuvaava muuttuja S_W_DECIDEML sai AHS:n mallissa arvon 0.18 ja omassa mallissani -0.82. Selkeitä suuria eroja näiden lisäksi oli myös arvokkaaksi kokemisen muuttujissa (S_HL_AWORKL). AHS:n malli löytyy sivuilta 26-27  taulukosta 7 [(artikkeli täällä).](http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf) 
 
-Miesten kohdalla puolestaan erot olivat merkittävämpiä AHS:n mallin kanssa. Suuria eroavaisuuksia oli etenkin seuraavien muuttujien kohdalla S_S_CAR (malli 3: 0.25, AHS: 0.07), S_W_CONCML (malli 3: 0.82, AHS: 0.16), S_W_ROLEML (malli 3: -0.74, AHS: -0.09), S_W_ROLEL (malli 3: -0.53, AHS: -0.16), S_HL_NAWORK (malli3 : -0.74, AHS: -0.17). Erot korrelaatiokertoimisissa olivat 0.30-0.70 desimaalin verran. AHS:n malli löytyy sivuilta 28-29, taulukosta 8 [(artikkeli täällä).](http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf)
+Miesten kohdalla puolestaan erot olivat suurempia kuin naisten kohdalla AHS:n mallin kanssa. Erityisen mielenkiintoista tämä on kun verrataan malliin 2, jossa juuri miesten väliset erot oman ja AHS:n mallin välillä olivat pienemmät kuin naisten. Mallissa 3 suuria eroavaisuuksia oli etenkin seuraavien muuttujien kohdalla S_S_CAR (malli 3: 0.25, AHS: 0.07), S_W_CONCML (malli 3: 0.82, AHS: 0.16), S_W_ROLEML (malli 3: -0.74, AHS: -0.09), S_W_ROLEL (malli 3: -0.53, AHS: -0.16), S_HL_NAWORK (malli3 : -0.74, AHS: -0.17). AHS:n malli löytyy sivuilta 28-29, taulukosta 8 [(artikkeli täällä).](http://philosophy.uchicago.edu/faculty/files/nussbaum/Capabilities%20and%20Well-Being%20Evidence%20Based%20on%20the%20Sen-Nussbaum%20Approach%20to%20Welfare.pdf)
 &nbsp;
 
 #TULOKSET JA POHDINTAA TIETEEN TOISTETTAVUUDESTA
 
-Alla on kuvattu Anand, Hunter ja Smithin tulokset ensin ja suluissa boldauksella ovat tämän analyysin tulokset: 
+Alla on kuvattu Anand, Hunter ja Smithin tulokset ensin ja suluissa tummennetulla ovat tämän analyysin tulokset: 
 
 ####Tekijät, jotka korreloivat NEGATIIVISESTI elämään tyytyväisyyden kanssa: 
 * S_HL_LIMIT terveyden elämää rajoittava vaikutus. Naiset: 0.32 (**0.44**). Miehet: 0.26 (**0.52**)
 * S_S_CAR ei mahdollisuutta auton käyttöön. Naiset: syrjäytetty huonon p-arvon vuoksi [SHPV] (**H**). Miehet: 0.07 (**0.25**) 
 * S_H_LAC_MOVE ei mahdollisuutta muuttaa pois nykyiseltä asuinalueelta. Naiset: 0.28 (**0.21**). Miehet: 0.30 (**0.21**)
 * S_H_CRIME rikollisuus asuinalueella. Naiset: SHPV  (**SHPV**). Miehet: 0.07 (**SHPV**)
-* S_W_SLEEPMM unien häiriintyminen huolien vuoksi. Naiset: 0.13 (**0.04**). Miehet: 0.01 (**0.74**) **<-- liittyisikö puuttuviin tietoihihn?**
-* S_W_WORTHMM itsensä kokeminen arvottomana henkilönä. Naiset: 0.55 (**SHPV**). Miehet: 0.32 (**0.86**) **<-- vai muuttujamuunnoksiin?**
+* S_W_SLEEPMM unien häiriintyminen huolien vuoksi. Naiset: 0.13 (**0.04**). Miehet: 0.01 (**0.74**)  **<-- liittyisikö puuttuviin tietoihihn?**
+* S_W_WORTHMM itsensä kokeminen arvottomana henkilönä. Naiset: 0.55 (**SHPV**). Miehet: 0.32 (**0.86**)  **<-- vai muuttujamuunnoksiin?**
 * S_HL_NAWORK terveys rajoittaa (vähän) työnmäärää. Naiset: 0.67 (**0.70**). Miehet: 0.17 (**SHPV**)
-* S_W_EACTIVEML jokapäiväisestä elämästä nauttimattomuus. Naiset: 0.47 (**SHPV**). Miehet: 0.42 (**SHPV**) **<-- ja tämä?**
+* S_W_EACTIVEML jokapäiväisestä elämästä nauttimattomuus. Naiset: 0.47 (**SHPV**). Miehet: 0.42 (**SHPV**)  **<-- ja tämä?**
 * S_W_HAPPYML onnellisuuden kokemuksen vähentyminen Naiset: 0.75 (**SHPV**). Miehet: 0.97 (**1.17**)   
 * S_W_DECIDEM kyvytön tekemään päätöksiä elämässään. Naiset: 0.09 (**SHPV**). Miehet: 0.04 (**SHPV**)
-* S_W_ROLEL kokemus hyödyllisyydestä vähentynyt. Naiset: 0.16 (**SHPV**). Miehet: 0.16 (**0.53**) **<-- hmm...**
+* S_W_ROLEL kokemus hyödyllisyydestä vähentynyt. Naiset: 0.16 (**SHPV**). Miehet: 0.16 (**0.53**)  **<-- hmm...**
 * S_S_EDUCATE korkea koulutus. Naiset: 0.13 (**SHPV**). Miehet: 0.16 (**0.22**)
 
 ####Tekijät, jotka korreloivat POSITIIVISESTI elämään tyytyväisyyden kanssa: 
 * S_HL_NOURISH mahdollisuus syödä liharuokia joka toinen päivä. Naiset: 0.17 (**0.35**). Miehet: 0.25 (**0.22**)
-* S_S_HOLIDAY mahdollisuus käydä matkoilla kerran vuodessa. Naiset: 0.22 (**SHPV**). Miehet: 0.21 (**SHPV**) **<-- miksi SHPV?**
-* S_S_MEAL illallistaminen perheen/ystävien kanssa kerran kuukaudessa. Naiset: 0.29 (**SHPV**). Miehet: 0.25 (**SHPV**) **<-- ?**
+* S_S_HOLIDAY mahdollisuus käydä matkoilla kerran vuodessa. Naiset: 0.22 (**SHPV**). Miehet: 0.21 (**SHPV**)  **<-- miksi SHPV?**
+* S_S_MEAL illallistaminen perheen/ystävien kanssa kerran kuukaudessa. Naiset: 0.29 (**SHPV**). Miehet: 0.25 (**SHPV**)  **<-- ?**
 * S_S_CLOTHES mahdollisuus ostaa uusia vaatteita. Naiset: 0.12 (**SHPV**). Miehet: SHPV (**SHPV**)
-* S_W_DEPRESSN ei masentuneisuuden tunnetta. Naiset: 0.29 (**0.57**). Miehet: 0.25 (**SHPV**) **<-- ?**
+* S_W_DEPRESSN ei masentuneisuuden tunnetta. Naiset: 0.29 (**0.57**). Miehet: 0.25 (**SHPV**)  **<-- ?**
 * S_W_CONFIDENTN vastaajat jotka eivät koe kadotteneensa itseluottamustaan. Naiset: 0.12 (**SHPV**). Miehet: 0.14 (**SHPV**) 
-* S_W_DIFICULTN kokemus ns. vaikeuksien voittamiseseta. Naiset: 0.06 (**SHPV**). Miehet: 0.06 (**1.49**) **<-- mikä ero!**
-* S_W_CONCML pystyy keskittymään tekemisiin vähemmän kuin aiemmin. Naiset: SHPV (**0.47**). Miehet: 0.16 (**0.81**) **<-- rakastuneita? miksi ero?**
+* S_W_DIFICULTN kokemus ns. vaikeuksien voittamiseseta. Naiset: 0.06 (**SHPV**). Miehet: 0.06 (**1.49**)  **<-- mikä ero!**
+* S_W_CONCML pystyy keskittymään tekemisiin vähemmän kuin aiemmin. Naiset: SHPV (**0.47**). Miehet: 0.16 (**0.81**)  **<-- rakastuneita? miksi ero?**
  * S_W_STRAINN ei ole ollut viimeaikoina "kuormittunut". Naiset: 0.16 (**0.23**). Miehet: 0.14 (**0.33**) 
 
 #####Tekijät, jotka eivät korreloi tyytyväisyyteen elämään kanssa
 * S_VOTE äänestäminen vaaleissa. Naiset: SHPV (**SHPV**). Miehet: SHPV (**SHPV**)
 * S_W_CONCB; S_W_CONCL;  mahdollisuus keskittyä tekemisiin. Naiset: SHPV (**SHPV**). Miehet: SHPV (**SHPV**) 
 
-Eroavaisuuksia siis omien ja Anand, Hunterin ja Smithin analyysien välillä löytyy. Erityisesti muutamat kohdat ovat erityisen huolestuttavia korkeiden erojen vuoksi (mm. S_W_SLEEPMM, S_W_WORTHMM, S_W_ROLEL, S_W_DIFICULTN, S_W_CONCML). Jotkut osatekijät mallissa osui toisaalta hyvinkin lähelle Anand, Hunterin ja Smithin mallia (mm. S_HL_LIMIT, S_HL_NOURISH, S_VOTE) Syyt analyysien välisiin eroihin voi löytyä esimerkiksi väärintehdyistä muuttujamuunnoksista omalta osalttani, tai eri tavoin käsitelyille puuttuville arvoille, joista Anand, Hunter ja Smith eivät maininneet artikkelissaan.  
+Eroavaisuuksia siis omien ja Anand, Hunterin ja Smithin analyysien ja mallien välillä löytyy. Erityisesti muutamat kohdat ovat huolestuttavia korkeiden erojensa vuoksi (mm. S_W_SLEEPMM, S_W_WORTHMM, S_W_ROLEL, S_W_DIFICULTN, S_W_CONCML). Jotkut osatekijät mallissa osui toisaalta hyvinkin lähelle Anand, Hunterin ja Smithin mallia (mm. S_HL_LIMIT, S_HL_NOURISH, S_VOTE) Syyt analyysien välisiin eroihin voi löytyä esimerkiksi eri tavoin tehdyistä muuttujamuunnoksista. Uudelleenkoodaus tai puuttuvien tietojen käsittely voi olla siis tehty eri tavoin omissa analyyseissani kuin Anandin, Hunterin ja Smithin analyyseissa. 
 
-Mallikohtaisista eroavaisuuksista puolestaan erityisen mielenkiintoinen oli erot mallin 1 ja 2 välillä. Malli 1 oli käytännössä identtinen (pois lukien minimaaliset heitot arvoissa) Anand, Hunter ja Smithin malli 1 kanssa, mutta malli 2 puolestaan kaikista kolmesta mallista eniten AHS:n mallista. Jotain siis on mahdollisesti tehty residuaali-muuttujien kohdalla, joka sekoitti tuloksia merkittävästi. Mutta kuten yllä jo mainittu, eivät Anand, Hunter ja Smith ilmaisseet selkeästi, miten he saivat residuaali-muuttujat ja tekivätkö he jotain lisämuunnoksia muuttujiin. Malli 3 puolestaan oli jo lähempänä Anand, Hunterin ja Smithin malli 3, mutta kuitenkin sisälsi muutamia merkittäviä eroja. Residuaali-muuttujien lisäksi huomionarvoista on, että naisten ja miesten väliset keskinäiset erot olivat samantyyliset vaikkakin arvot olivat erit AHS:n mallien kanssa. 
+Mallikohtaisista eroavaisuuksista puolestaan erityisen mielenkiintoista olivat erot mallin 1 ja 2 välillä. Malli 1 oli käytännössä identtinen (pois lukien minimaaliset heitot arvoissa) Anand, Hunter ja Smithin malli 1 kanssa, mutta malli 2 puolestaan erosi kaikista kolmesta mallista eniten AHS:n mallista. Jotain siis on mahdollisesti tehty residuaali-muuttujien kohdalla, joka sekoitti tuloksia merkittävästi. Mutta kuten yllä jo mainitsin, eivät Anand, Hunter ja Smith ilmaisseet selkeästi, miten he saivat residuaali-muuttujat ja tekivätkö he jotain lisämuunnoksia muuttujiin. Malli 3 puolestaan oli jo lähempänä Anand, Hunterin ja Smithin malli 3:a, mutta kuitenkin sisälsi muutamia merkittäviä eroja. Residuaali-muuttujien lisäksi huomionarvoista on, että naisten ja miesten väliset keskinäiset erot olivat samantyyliset vaikkakin arvot olivat kokonaisuudessaan erit AHS:n mallien kanssa. 
 
-Lopputuloksena voitaisiin sanoa, ettei tulosten perusteella anaalysi ollut erityisen hyvin toistettavissa. Anand, Hunterin ja Smithin artikkeli ei myöskään ollut niin läpinäkyvä mitä olisi voinut olla, vaikka he olivatkin liittäneet analyysin loppuun muuttuja-luettelon, jossa kerrottiin, miten muuttujia oli uudelleenkoodattua ja -nimetty. He kuitenkin jättivät mainitsematta mitä he tekivät puuttuville arvoille. Mahdollisuutena on myös, että olen tehnyt jollain tapaa muuttujamuunnokset väärin tai eri tavoin mitä Anand, Hunter ja Smith. Mikä puolestaan kertoo siitä, kuinka monin eri tavoin samalla aineistolla voi saman analyysin tehdä, niin, että lopputulokset eriävät merkittävästi. Kaiken kaikkiaan, tutkimuksen replikointi on mielenkiintoista ja haastavaa, vaikka käytössä olisikin täysin sama aineisto. Tutkijan rooli vaikuttaa olevan hyvin merkittävä tutkimuksen tulosten kannalta, joten sitä on ainakin entistä kriittisempi kvantitatiivista tutkimusta kohtaan tästedes. Hyvin tehtynä tilastollinen tutkimus voi olla erityisen arvokasta, mutta replikointia voitaisiin tehdä varmuuden vuoksi useamminkin, nimeomaan tiedon toistettavuuden ja läpinäkyvyydem vuoksi.  
+Lopputuloksena voitaisiin sanoa, ettei tulosten perusteella anaalysi ollut erityisen hyvin toistettavissa. Anand, Hunterin ja Smithin artikkeli ei myöskään ollut niin läpinäkyvä mitä olisi voinut olla. He olivat kuitenkin liittäneet analyysin loppuun muuttuja-luettelon, jossa kerrottiin, miten muuttujia oli uudelleenkoodattua ja -nimetty, mikä mahdollisti replikaation. Tästä huolimatta, Anand, Hunter ja Smith olivat jättäneet mainitsematta mitä he tekivät puuttuville arvoille. Mahdollisuutena on myös, että olen tehnyt jollain tapaa muuttujamuunnokset väärin tai eri tavoin mitä Anand, Hunter ja Smith. Mikä puolestaan kertoo siitä, kuinka monin eri tavoin samalla aineistolla voi saman analyysin tehdä, niin, että lopputulokset eroavat merkittävästi. Kaiken kaikkiaan, tutkimuksen replikointi on mielenkiintoista, mutta haastavaa, vaikka käytössä olisikin täysin sama aineisto. Tutkijan rooli vaikuttaa olevan hyvin keskeinen tutkimuksen tulosten kannalta, joten sitä on ainakin entistä kriittisempi kvantitatiivista tutkimusta kohtaan tästedes. Hyvin tehtynä tilastollinen tutkimus voi olla erityisen arvokasta, mutta sen täytyy olla myös replikoitavissa. Tämän vuoksi tutkijoiden olisi hyvä pitää mielessään tutkimusta tehdessä ja siitä kirjoittaessa, kuinka hyvin lukija voisi mahdollisesti tutkimuksen replikoida, tiedon toistettavuuden ja läpinäkyvyyden vuoksi.  
 
 #LÄHTEET
 Anand, P., Hunter, G., & Smith, R. (2005). Capabilities and Well-Being: Evidence Based on the Sen–Nussbaum Approach to Welfare. Social Indicators Research, 74(1), 9–55. https://doi.org/10.1007/s11205-005-6518-z
 
 British Household Panel Survey, wave 10, Economic and Social Research Council Research Centre on Micro-Social Change, Essex: UK Data Archive (distributor)
-&nbsp;
+
 
 
 
